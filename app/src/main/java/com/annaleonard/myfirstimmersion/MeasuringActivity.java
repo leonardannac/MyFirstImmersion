@@ -15,7 +15,7 @@ import com.google.android.glass.view.WindowUtils;
 
 public class MeasuringActivity extends Activity {
 
-    //private EditText joint1pos, joint2pos,joint3pos,joint4pos,joint5pos,joint6pos,joint7pos;
+    private EditText joint1pos, joint2pos,joint3pos,joint4pos,joint5pos,joint6pos,joint7pos;
     private EditText desiredJoint, desiredJointPos;
 
     @Override
