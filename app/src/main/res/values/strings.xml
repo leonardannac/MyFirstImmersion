@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MyFirstImmersion</string>
+    <string name="title_activity_main">Hello World Immersion</string>
+
+    <string name="information">Information</string>
+    <string name="title_activity_information">Information Activity</string>
+
+    <string name="start_measuring">Start Measuring</string>
+    <string name="title_activity_measuring">MeasuringActivity</string>
+
+    <string name="joint1">Joint 1: </string>
+    <string name="joint2">Joint 2: </string>
+    <string name="joint3">Joint 3: </string>
+    <string name="joint4">Joint 4: </string>
+    <string name="joint5">Joint 5: </string>
+    <string name="joint6">Joint 6: </string>
+    <string name="joint7">Joint 7: </string>
+
+    <string name="joint_1_trigger">Show Joint 1</string>
+    <string name="joint_2_trigger">Show Joint 2</string>
+    <string name="joint_3_trigger">Show Joint 3</string>
+    <string name="joint_4_trigger">Show Joint 4</string>
+    <string name="joint_5_trigger">Show Joint 5</string>
+    <string name="joint_6_trigger">Show Joint 6</string>
+    <string name="joint_7_trigger">Show Joint 7</string>
+    <string name="all_joints_trigger">Show All Joints</string>
+
+</resources>
