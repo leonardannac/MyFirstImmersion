@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         startThread();
 
@@ -227,7 +229,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                                     {
                                         jointSwitcherArray[i].setText(jointStringArray[i]);
                                     }
-                                    makeView().invalidate();
+
 
 //                                    joint1Switcher.setText(jointStringArray[1]);
 //                                    joint2Switcher.setText(jointStringArray[2]);
