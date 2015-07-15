@@ -39,6 +39,9 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     String joint1pos, joint2pos,joint3pos,joint4pos,joint5pos,joint6pos,joint7pos;
     private EditText desiredJoint, desiredJointPos;
     private TextSwitcher joint1Switcher,joint2Switcher,joint3Switcher,joint4Switcher,joint5Switcher,joint6Switcher,joint7Switcher;
+    private TextSwitcher[] jointSwitcherArray = {joint1Switcher,joint2Switcher,joint3Switcher,joint4Switcher,joint5Switcher,joint6Switcher,joint7Switcher};
+    private int [] switcherId = {R.id.joint1switcher,R.id.joint2switcher, R.id.joint3switcher, R.id.joint4switcher, R.id.joint5switcher, R.id.joint6switcher, R.id.joint7switcher};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,24 +53,32 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         setContentView(R.layout.activity_measuring);
         Log.i("setContentView", " ");
 
-        joint1Switcher = (TextSwitcher) findViewById(R.id.joint1switcher);
-        joint2Switcher = (TextSwitcher) findViewById(R.id.joint2switcher);
+        for (int count =0; count< 7; count++)
+        {
+            String xmlSwitcherId = new String ("joint" + count+1 + "switcher");
+            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);
+            jointSwitcherArray[count].setFactory(this);
+            jointSwitcherArray[count].setText("0.00");
+        }
+
+//        joint1Switcher = (TextSwitcher) findViewById(R.id.joint1switcher);
+//        joint2Switcher = (TextSwitcher) findViewById(R.id.joint2switcher);
 //        joint3Switcher = (TextSwitcher) findViewById(R.id.joint3switcher);
 //        joint4Switcher = (TextSwitcher) findViewById(R.id.joint4switcher);
 //        joint5Switcher = (TextSwitcher) findViewById(R.id.joint5switcher);
 //        joint6Switcher = (TextSwitcher) findViewById(R.id.joint6switcher);
 //        joint7Switcher = (TextSwitcher) findViewById(R.id.joint7switcher);
-        Log.i("TextSwitchers created."," ");
-        joint1Switcher.setFactory(this);
-        joint2Switcher.setFactory(this);
+//        Log.i("TextSwitchers created."," ");
+//        joint1Switcher.setFactory(this);
+//        joint2Switcher.setFactory(this);
 //        joint3Switcher.setFactory(this);
 //        joint4Switcher.setFactory(this);
 //        joint5Switcher.setFactory(this);
 //        joint6Switcher.setFactory(this);
 //        joint7Switcher.setFactory(this);
-        Log.i("Switcher.setFactory", " ");
-        joint1Switcher.setText("0.00");
-        joint2Switcher.setText("0.00");
+//        Log.i("Switcher.setFactory", " ");
+//        joint1Switcher.setText("0.00");
+//        joint2Switcher.setText("0.00");
 //        joint3Switcher.setText("0.00");
 //        joint4Switcher.setText("0.00");
 //        joint5Switcher.setText("0.00");
@@ -211,8 +222,15 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run(){
-                                    joint1Switcher.setText(jointStringArray[1]);
-                                    joint2Switcher.setText(jointStringArray[2]);
+
+                                    for(int i=0; i<7; i++)
+                                    {
+                                        jointSwitcherArray[i].setText(jointStringArray[i]);
+                                    }
+                                    makeView().invalidate();
+
+//                                    joint1Switcher.setText(jointStringArray[1]);
+//                                    joint2Switcher.setText(jointStringArray[2]);
 //                                    joint3Switcher.setText(jointStringArray[3]);
 //                                    joint4Switcher.setText(jointStringArray[4]);
 //                                    joint5Switcher.setText(jointStringArray[5]);
