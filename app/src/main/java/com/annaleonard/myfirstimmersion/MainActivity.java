@@ -52,6 +52,10 @@ import java.util.List;
  */
 public class MainActivity extends Activity {
 
+//    I am writing new stuff so I can push this!
+//    more more more
+//    push push push
+
     private CardScrollView mCardScrollView; //horizontal view that shows scrolling cards
     private CardScrollAdapter mCardScrollAdapter; //supplies cards from mCards to mCardScrollView
     private List<CardBuilder> mCards;   //a list to store cards made with CardBuilder
