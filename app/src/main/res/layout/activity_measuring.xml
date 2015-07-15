@@ -55,4 +55,48 @@
         android:text="@string/joint7"
         android:layout_below="@+id/joint6" />
 
+
+    <TextSwitcher
+        android:id="@+id/joint1switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/joint1"
+        android:textColor="#ddbb11"/>
+    <TextSwitcher
+        android:id="@+id/joint2switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/joint2"
+        android:textColor="#99cc33"/>
+    <TextSwitcher
+        android:id="@+id/joint3switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/joint3"
+        android:textColor="#cc3333"/>
+    <TextSwitcher
+        android:id="@+id/joint4switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/joint4"
+        android:textColor="#34a7ff"/>
+    <TextSwitcher
+        android:id="@+id/joint5switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/joint5"
+        android:textColor="#808080"/>
+    <TextSwitcher
+        android:id="@+id/joint6switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/joint6"
+        android:textColor="#ffffff"/>
+    <TextSwitcher
+        android:id="@+id/joint7switcher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/joint7"
+        android:textColor="#ffffff"/>
+
 </RelativeLayout>
