@@ -38,9 +38,8 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
     String joint1pos, joint2pos,joint3pos,joint4pos,joint5pos,joint6pos,joint7pos;
     private EditText desiredJoint, desiredJointPos;
-    private TextSwitcher joint1Switcher,joint2Switcher,joint3Switcher,joint4Switcher,joint5Switcher,joint6Switcher,joint7Switcher;
-    private TextSwitcher[] jointSwitcherArray = {joint1Switcher,joint2Switcher,joint3Switcher,joint4Switcher,joint5Switcher,joint6Switcher,joint7Switcher};
     private int [] switcherId = {R.id.joint1switcher,R.id.joint2switcher, R.id.joint3switcher, R.id.joint4switcher, R.id.joint5switcher, R.id.joint6switcher, R.id.joint7switcher};
+    TextSwitcher[] jointSwitcherArray = new TextSwitcher[7];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,95 +51,13 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         setContentView(R.layout.activity_measuring);
         Log.i("setContentView", " ");
 
-//        for (int count =0; count< 7; count++)
-//        {
-//            final String xmlSwitcherId = new String ("joint" + count+1 );
-//            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);
-////            jointSwitcherArray[count].setFactory(this);
-//            jointSwitcherArray[count].setFactory(new ViewSwitcher.ViewFactory() {
-//                public View makeView() {
-//                    TextView tv = new TextView(MeasuringActivity.this);
-//                    tv.setTextSize(22);
-//                    Log.i("mS makeView() ",xmlSwitcherId);
-//                    return tv;
-//                }
-//            });
-//            jointSwitcherArray[count].setText("0.00");
-//            Log.i("mS.setText"," ");
-//        }
-        joint1Switcher = (TextSwitcher) findViewById(R.id.joint1switcher);
-        joint2Switcher = (TextSwitcher) findViewById(R.id.joint2switcher);
-        joint3Switcher = (TextSwitcher) findViewById(R.id.joint3switcher);
-        joint4Switcher = (TextSwitcher) findViewById(R.id.joint4switcher);
-        joint5Switcher = (TextSwitcher) findViewById(R.id.joint5switcher);
-        joint6Switcher = (TextSwitcher) findViewById(R.id.joint6switcher);
-        joint7Switcher = (TextSwitcher) findViewById(R.id.joint7switcher);
-
-        joint1Switcher.setFactory(new ViewSwitcher.ViewFactory() {
-            public View makeView() {
-                TextView tv = new TextView(MeasuringActivity.this);
-                tv.setTextSize(20);
-                Log.i("mS1 makeView()", " ");
-                return tv;
-            }
-        });
-        joint2Switcher.setFactory(new ViewSwitcher.ViewFactory() {
-            public View makeView() {
-                TextView tv = new TextView(MeasuringActivity.this);
-                tv.setTextSize(20);
-                Log.i("mS2 makeView()", " ");
-                return tv;
-            }
-        });
-        joint3Switcher.setFactory(new ViewSwitcher.ViewFactory() {
-            public View makeView() {
-                TextView tv = new TextView(MeasuringActivity.this);
-                tv.setTextSize(20);
-                Log.i("mS3 makeView()", " ");
-                return tv;
-            }
-        });
-        joint4Switcher.setFactory(new ViewSwitcher.ViewFactory() {
-            public View makeView() {
-                TextView tv = new TextView(MeasuringActivity.this);
-                tv.setTextSize(20);
-                Log.i("mS4 makeView()", " ");
-                return tv;
-            }
-        });
-        joint5Switcher.setFactory(new ViewSwitcher.ViewFactory() {
-            public View makeView() {
-                TextView tv = new TextView(MeasuringActivity.this);
-                tv.setTextSize(20);
-                Log.i("mS5 makeView()", " ");
-                return tv;
-            }
-        });
-        joint6Switcher.setFactory(new ViewSwitcher.ViewFactory() {
-            public View makeView() {
-                TextView tv = new TextView(MeasuringActivity.this);
-                tv.setTextSize(20);
-                Log.i("mS6 makeView()", " ");
-                return tv;
-            }
-        });
-        joint7Switcher.setFactory(new ViewSwitcher.ViewFactory() {
-            public View makeView() {
-                TextView tv = new TextView(MeasuringActivity.this);
-                tv.setTextSize(20);
-                Log.i("mS7 makeView()", " ");
-                return tv;
-            }
-        });
-
-        joint1Switcher.setText("there is some text here.");
-        joint2Switcher.setText("and here too, hopefully.");
-        joint3Switcher.setText("there is some text here.");
-        joint4Switcher.setText("and here too, hopefully.");
-        joint5Switcher.setText("there is some text here.");
-        joint6Switcher.setText("and here too, hopefully.");
-        joint7Switcher.setText("there is some text here.");
-
+        for (int count =0; count< 7; count++)
+        {
+            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);//attaches each switcher to its xml id
+            jointSwitcherArray[count].setFactory(this);
+            jointSwitcherArray[count].setText("0.00");
+            Log.i("mS.setText", String.valueOf(count));
+        }
     }
 
     @Override
@@ -165,6 +82,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        int [] showJoints = {R.id.showJoint1, R.id.showJoint2, R.id.showJoint3, R.id.showJoint4, R.id.showJoint5, R.id.showJoint6, R.id.showJoint7};
         if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS){
             switch(item.getItemId()) {
                 case R.id.showJoint1:
@@ -216,7 +134,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
     public void startThread(){
-//        Log.i("startThread() called", " ");
+        Log.i("startThread() called", " ");
 
         try {
 //            Log.i("Entered try block.", " ");
@@ -234,10 +152,27 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 //                    Log.i("thread.run.start"," ");
 
                     while (true) {
-                        byte[] buf = new byte[56];
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Log.i("UI initiate setText", "Outside try");
+
+                                for(int i=0; i<7; i++)
+                                {
+                                    Log.i("Joint "+i+": ", String.valueOf(i));
+                                    jointSwitcherArray[i].setText(String.valueOf(i));
+                                }                                Log.i("UI completed setText", "Outside try");
+                            }
+                        });
+
+
+                                byte[] buf = new byte[56];
                         mPacket = new DatagramPacket(buf, buf.length);
 
                         try {
+
                             Thread.sleep(10, 0);
                             mSocket.receive(mPacket);
 //                            byte[] data = mPacket.getData();
@@ -253,24 +188,33 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 //                                Log.i("Joint "+n+" ", jointStringArray[i]);
                             }
 
+                            Log.i("about to run on UI", "UI Thread Running ");
+
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run(){
 
-//                                    for(int i=0; i<7; i++)
-//                                    {
-//                                        Log.i("Joint "+i+": ", jointStringArray[0]);
-//                                        jointSwitcherArray[i].setText(jointStringArray[i]);
-//                                    }
-//                                    makeView().invalidate();
+                                    Log.i("UI initiate setText", "inside try");
 
-                                    joint1Switcher.setText(jointStringArray[0]);
-                                    joint2Switcher.setText(jointStringArray[1]);
-                                    joint3Switcher.setText(jointStringArray[2]);
-                                    joint4Switcher.setText(jointStringArray[3]);
-                                    joint5Switcher.setText(jointStringArray[4]);
-                                    joint6Switcher.setText(jointStringArray[5]);
-                                    joint7Switcher.setText(jointStringArray[6]);
+                                    jointSwitcherArray[1].setCurrentText("Second UI Thread call");
+                                    Log.i("UI completed setText", "inside try");
+
+
+                                    for(int i=0; i<7; i++)
+                                    {
+                                        Log.i("Joint "+i+": ", jointStringArray[0]);
+                                        jointSwitcherArray[i].setText(String.valueOf(i));
+                                    }
+//                                    makeView().invalidate();
+//
+//                                    joint1Switcher.setText(jointStringArray[0]);
+//                                    joint2Switcher.setText(jointStringArray[1]);
+//                                    joint3Switcher.setText(jointStringArray[2]);
+//                                    joint4Switcher.setText(jointStringArray[3]);
+//                                    joint5Switcher.setText(jointStringArray[4]);
+//                                    joint6Switcher.setText(jointStringArray[5]);
+//                                    joint7Switcher.setText(jointStringArray[6]);
 //                                    Log.i("Joint 1",joint1pos);
 //                                    Log.i("Joint 2",joint2pos);
 //                                    Log.i("Joint 3",joint3pos);

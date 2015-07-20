@@ -57,38 +57,44 @@
 
     <TextSwitcher
         android:id="@+id/joint1switcher"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/joint1"/>
     <TextSwitcher
         android:id="@+id/joint2switcher"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/joint1switcher"/>
+        android:layout_toEndOf="@+id/joint1"
+        android:layout_below="@+id/joint1"/>
     <TextSwitcher
         android:id="@+id/joint3switcher"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/joint2switcher"/>
+        android:layout_toEndOf="@+id/joint1"
+        android:layout_below="@+id/joint2"/>
     <TextSwitcher
         android:id="@+id/joint4switcher"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/joint3switcher"/>
+        android:layout_toEndOf="@+id/joint1"
+        android:layout_below="@+id/joint3"/>
     <TextSwitcher
         android:id="@+id/joint5switcher"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/joint4switcher"/>
+        android:layout_toEndOf="@+id/joint1"
+        android:layout_below="@+id/joint4"/>
     <TextSwitcher
         android:id="@+id/joint6switcher"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/joint5switcher" />
+        android:layout_toEndOf="@+id/joint1"
+        android:layout_below="@+id/joint5" />
     <TextSwitcher
         android:id="@+id/joint7switcher"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/joint6switcher" />
+        android:layout_toEndOf="@+id/joint1"
+        android:layout_below="@+id/joint6" />
 
 </RelativeLayout>
