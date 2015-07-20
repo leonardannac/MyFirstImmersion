@@ -1,114 +1,94 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.annaleonard.myfirstimmersion.MeasuringActivity">
 
-    <RelativeLayout
-        android:id="@+id/joints_display"
-        android:duplicateParentState="true"
+    <TextView
+        android:id="@+id/joint1"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:text="@string/joint1"
+        android:gravity="center_horizontal"
+        android:textColor="#ddbb11"/>
+    <TextView
+        android:id="@+id/joint2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joint2"
+        android:layout_below="@+id/joint1"
+        android:textColor="#99cc33"/>
+    <TextView
+        android:id="@+id/joint3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joint3"
+        android:layout_below="@+id/joint2"
+        android:textColor="#cc3333"/>
+    <TextView
+        android:id="@+id/joint4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joint4"
+        android:layout_below="@+id/joint3"
+        android:textColor="#34a7ff"/>
+    <TextView
+        android:id="@+id/joint5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joint5"
+        android:layout_below="@+id/joint4"
+        android:textColor="#808080"/>
+    <TextView
+        android:id="@+id/joint6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joint6"
+        android:layout_below="@+id/joint5"
+        android:textColor="#ffffff"/>
+    <TextView
+        android:id="@+id/joint7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/joint7"
+        android:layout_below="@+id/joint6" />
 
+    <TextSwitcher
+        android:id="@+id/joint1switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/joint1"/>
+    <TextSwitcher
+        android:id="@+id/joint2switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/joint1switcher"/>
+    <TextSwitcher
+        android:id="@+id/joint3switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/joint2switcher"/>
+    <TextSwitcher
+        android:id="@+id/joint4switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/joint3switcher"/>
+    <TextSwitcher
+        android:id="@+id/joint5switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/joint4switcher"/>
+    <TextSwitcher
+        android:id="@+id/joint6switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/joint5switcher" />
+    <TextSwitcher
+        android:id="@+id/joint7switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/joint6switcher" />
 
-        <TextView
-            android:id="@+id/joint1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/joint1"
-            android:gravity="center_horizontal"
-            android:textColor="#ddbb11"/>
-        <TextView
-            android:id="@+id/joint2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/joint2"
-            android:gravity="center_horizontal"
-            android:layout_below="@+id/joint1"
-            android:textColor="#99cc33"/>
-        <TextView
-            android:id="@+id/joint3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/joint3"
-            android:layout_below="@+id/joint2"
-            android:textColor="#cc3333"/>
-        <TextView
-            android:id="@+id/joint4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/joint4"
-            android:layout_below="@+id/joint3"
-            android:textColor="#34a7ff"/>
-        <TextView
-            android:id="@+id/joint5"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/joint5"
-            android:layout_below="@+id/joint4"
-            android:textColor="#808080"/>
-        <TextView
-            android:id="@+id/joint6"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/joint6"
-            android:layout_below="@+id/joint5"
-            android:textColor="#ffffff"/>
-        <TextView
-            android:id="@+id/joint7"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/joint7"
-            android:layout_below="@+id/joint6" />
-
-        <TextSwitcher
-            android:id="@+id/joint1switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/joint1"
-            android:textColor="#ddbb11"/>
-        <TextSwitcher
-            android:id="@+id/joint2switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/joint2"
-            android:textColor="#99cc33"/>
-        <TextSwitcher
-            android:id="@+id/joint3switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/joint3"
-            android:textColor="#cc3333"/>
-        <TextSwitcher
-            android:id="@+id/joint4switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/joint4"
-            android:textColor="#34a7ff"/>
-        <TextSwitcher
-            android:id="@+id/joint5switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/joint5"
-            android:textColor="#808080"/>
-        <TextSwitcher
-            android:id="@+id/joint6switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/joint6"
-            android:textColor="#ffffff"/>
-        <TextSwitcher
-            android:id="@+id/joint7switcher"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/joint7"
-            android:textColor="#ffffff"/>
-    </RelativeLayout>
 </RelativeLayout>
-
-
