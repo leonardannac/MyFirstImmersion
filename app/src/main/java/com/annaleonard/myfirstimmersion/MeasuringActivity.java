@@ -36,10 +36,18 @@ import java.nio.ByteOrder;
 
 public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFactory, View.OnClickListener {
 
-    String joint1pos, joint2pos,joint3pos,joint4pos,joint5pos,joint6pos,joint7pos;
-    private EditText desiredJoint, desiredJointPos;
+    private TextSwitcher desiredJoint, desiredJointPos;
     private int [] switcherId = {R.id.joint1switcher,R.id.joint2switcher, R.id.joint3switcher, R.id.joint4switcher, R.id.joint5switcher, R.id.joint6switcher, R.id.joint7switcher};
     TextSwitcher[] jointSwitcherArray = new TextSwitcher[7];
+
+
+    //Attaches textSwitcher to xml resource, and creates to child views to switch between
+    //DOES NOT WORK
+    public void switcherSetup (TextSwitcher switcher, int switcherXMLResource)
+    {
+        switcher = (TextSwitcher) findViewById(switcherXMLResource);//attaches each switcher to its xml id
+        switcher.setFactory(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         setContentView(R.layout.activity_measuring);
         Log.i("setContentView", " ");
 
+        //Sets up switcher for all 7 joints and has them display a value of 0
         for (int count =0; count< 7; count++)
         {
             jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);//attaches each switcher to its xml id
@@ -58,6 +67,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             jointSwitcherArray[count].setText("0.00");
             Log.i("mS.setText", String.valueOf(count));
         }
+
     }
 
     @Override
@@ -83,48 +93,80 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int [] showJoints = {R.id.showJoint1, R.id.showJoint2, R.id.showJoint3, R.id.showJoint4, R.id.showJoint5, R.id.showJoint6, R.id.showJoint7};
-        if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS){
-            switch(item.getItemId()) {
-                case R.id.showJoint1:
-                    setContentView(R.layout.joint_1);
-                    return true;
-                case R.id.showJoint2:
-                    setContentView(R.layout.joint_2);
-                    return true;
-                case R.id.showJoint3:
-                    setContentView(R.layout.joint_3);
-                    return true;
-                case R.id.showJoint4:
-                    setContentView(R.layout.show_joint);
-//                    setContentView(R.layout.show_joint_4);
-                    return true;
-                case R.id.showJoint5:
-                    setContentView(R.layout.show_joint);
-//                    setContentView(R.layout.show_joint_5);
-                    return true;
-                case R.id.showJoint6:
-                    setContentView(R.layout.show_joint);
-//                    setContentView(R.layout.show_joint_6);
-                    return true;
-                case R.id.showJoint7:
-                    setContentView(R.layout.show_joint);
-//                    setContentView(R.layout.show_joint_7);
-                    return true;
-                case R.id.showAllJoints:
-                    setContentView(R.layout.activity_measuring);
-//                    setContentView(R.layout.show_all_joints);
-                    return true;
-                default:
+        boolean jointSelected = false;
+        if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS) {
+            //switch(item.getItemId()) {
+
+            if (item.getItemId() == R.id.single_joint_option) {
+                //switcherSetup(desiredJoint, R.id.desired_joint);
+                desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                desiredJoint.setFactory(this);
+                desiredJoint.setText("does it show up?");
+
+                //switcherSetup(desiredJointPos, R.id.desired_joint_pos);
+                desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                desiredJointPos.setFactory(this);
+                desiredJointPos.setText("it should...");
+
+                setContentView(R.layout.show_joint);
+
+//                switch (item.getItemId()) {
+//                    case R.id.showJoint1:
+//                        desiredJoint.setText("Joint 1");
+//                        jointSelected = true;
+//                    case R.id.showJoint2:
+//                        desiredJoint.setText("Joint 2");
+//                        jointSelected = true;
+//                    case R.id.showJoint3:
+//                        desiredJoint.setText("Joint 3");
+//                        jointSelected = true;
+//                    case R.id.showJoint4:
+//                        desiredJoint.setText("Joint 4");
+//                        jointSelected = true;
+//                    case R.id.showJoint5:
+//                        desiredJoint.setText("Joint 5");
+//                        jointSelected = true;
+//                    case R.id.showJoint6:
+//                        desiredJoint.setText("Joint 6");
+//                        jointSelected = true;
+//                    case R.id.showJoint7:
+//                        desiredJoint.setText("Joint 7");
+//                        jointSelected = true;
+//                    default:
+//                        jointSelected = false;
+//                        break;
+//                }
+
+                //setContentView(R.layout.show_joint);
+
+                if (jointSelected) {
+                    return jointSelected;
+                }
+                else
+                {
                     return super.onMenuItemSelected(featureId, item);
+                }
+            }
+
+            else if (R.id.showAllJoints == item.getItemId())
+            {
+                setContentView(R.layout.activity_measuring);
+                return true;
+            }
+
+            else
+            {
+                return super.onMenuItemSelected(featureId, item);
             }
         }
+
         return super.onMenuItemSelected(featureId, item);
     }
 
     public View makeView(){
         TextView t = new TextView(this);
         t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-        t.setTextSize(28);
+        t.setTextSize(24);
         return t;
     }
 
@@ -151,23 +193,8 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
 //                    Log.i("thread.run.start"," ");
 
-                    while (true) {
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                Log.i("UI initiate setText", "Outside try");
-
-                                for(int i=0; i<7; i++)
-                                {
-                                    Log.i("Joint "+i+": ", String.valueOf(i));
-                                    jointSwitcherArray[i].setText(String.valueOf(i));
-                                }                                Log.i("UI completed setText", "Outside try");
-                            }
-                        });
-
-
+                    while (true)
+                    {
                                 byte[] buf = new byte[56];
                         mPacket = new DatagramPacket(buf, buf.length);
 
@@ -179,6 +206,9 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
 
 //                            byte[] j2byte = Arrays.copyOfRange(byte[] buff, int 8, int 15);
+
+                            //creates double array to store all joint values recieved
+                            //converts doubles to strings for display
                             double[] jointDoubleArray = new double[7];
                             final String[] jointStringArray = new String[7];
                             for(int i=0; i<7; i++){
@@ -193,35 +223,14 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
                             runOnUiThread(new Runnable() {
                                 @Override
-                                public void run(){
-
-                                    Log.i("UI initiate setText", "inside try");
-
-                                    jointSwitcherArray[1].setCurrentText("Second UI Thread call");
-                                    Log.i("UI completed setText", "inside try");
-
-
+                                public void run()
+                                {
+                                    //prints position of each joint to GUI
                                     for(int i=0; i<7; i++)
                                     {
-                                        Log.i("Joint "+i+": ", jointStringArray[0]);
-                                        jointSwitcherArray[i].setText(String.valueOf(i));
+                                        Log.i("Joint "+ String.valueOf(i+1) + ": ", jointStringArray[0]);
+                                        jointSwitcherArray[i].setText(jointStringArray[i]);
                                     }
-//                                    makeView().invalidate();
-//
-//                                    joint1Switcher.setText(jointStringArray[0]);
-//                                    joint2Switcher.setText(jointStringArray[1]);
-//                                    joint3Switcher.setText(jointStringArray[2]);
-//                                    joint4Switcher.setText(jointStringArray[3]);
-//                                    joint5Switcher.setText(jointStringArray[4]);
-//                                    joint6Switcher.setText(jointStringArray[5]);
-//                                    joint7Switcher.setText(jointStringArray[6]);
-//                                    Log.i("Joint 1",joint1pos);
-//                                    Log.i("Joint 2",joint2pos);
-//                                    Log.i("Joint 3",joint3pos);
-//                                    Log.i("Joint 4",joint4pos);
-//                                    Log.i("Joint 5",joint5pos);
-//                                    Log.i("Joint 6",joint6pos);
-//                                    Log.i("Joint 7",joint7pos);
                                 }
                             });
 //                                double j1 = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getDouble();

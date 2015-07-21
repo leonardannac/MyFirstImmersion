@@ -3,33 +3,40 @@
     tools:context="com.annaleonard.myfirstimmersion.MeasuringActivity">
 
     <item
-        android:id="@+id/showJoint1"
-        android:title="@string/joint_1_trigger"
-        android:orderInCategory="1"/>
-    <item
-        android:id="@+id/showJoint2"
-        android:title="@string/joint_2_trigger"
-        android:orderInCategory="2"/>
-    <item
-        android:id="@+id/showJoint3"
-        android:title="@string/joint_3_trigger"
-        android:orderInCategory="3"/>
-    <item
-        android:id="@+id/showJoint4"
-        android:title="@string/joint_4_trigger"
-        android:orderInCategory="4"/>
-    <item
-        android:id="@+id/showJoint5"
-        android:title="@string/joint_5_trigger"
-        android:orderInCategory="5"/>
-    <item
-        android:id="@+id/showJoint6"
-        android:title="@string/joint_6_trigger"
-        android:orderInCategory="6"/>
-    <item
-        android:id="@+id/showJoint7"
-        android:title="@string/joint_7_trigger"
-        android:orderInCategory="7"/>
+        android:id="@+id/single_joint_option"
+        android:title="@string/single_joint_trigger">
+        <menu>
+            <item
+                android:id="@+id/showJoint1"
+                android:title="@string/joint_1_trigger"
+                android:orderInCategory="1"/>
+            <item
+                android:id="@+id/showJoint2"
+                android:title="@string/joint_2_trigger"
+                android:orderInCategory="2"/>
+            <item
+                android:id="@+id/showJoint3"
+                android:title="@string/joint_3_trigger"
+                android:orderInCategory="3"/>
+            <item
+                android:id="@+id/showJoint4"
+                android:title="@string/joint_4_trigger"
+                android:orderInCategory="4"/>
+            <item
+                android:id="@+id/showJoint5"
+                android:title="@string/joint_5_trigger"
+                android:orderInCategory="5"/>
+            <item
+                android:id="@+id/showJoint6"
+                android:title="@string/joint_6_trigger"
+                android:orderInCategory="6"/>
+            <item
+                android:id="@+id/showJoint7"
+                android:title="@string/joint_7_trigger"
+                android:orderInCategory="7"/>
+        </menu>
+    </item>
+
     <item
         android:id="@+id/showAllJoints"
         android:title="@string/all_joints_trigger"

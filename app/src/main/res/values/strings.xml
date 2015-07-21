@@ -18,6 +18,8 @@
     <string name="joint6">Joint 6: </string>
     <string name="joint7">Joint 7: </string>
 
+    <string name = "single_joint_title"> Single Joint</string>
+    <string name="single_joint_trigger">Show Joint</string>
     <string name="joint_1_trigger">1</string>
     <string name="joint_2_trigger">2</string>
     <string name="joint_3_trigger">3</string>
