@@ -92,52 +92,96 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int [] showJoints = {R.id.showJoint1, R.id.showJoint2, R.id.showJoint3, R.id.showJoint4, R.id.showJoint5, R.id.showJoint6, R.id.showJoint7};
+        //int [] showJoints = {R.id.showJoint1, R.id.showJoint2, R.id.showJoint3, R.id.showJoint4, R.id.showJoint5, R.id.showJoint6, R.id.showJoint7};
         boolean jointSelected = false;
         if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS) {
-            //switch(item.getItemId()) {
+            switch(item.getItemId()) {
 
-            if (item.getItemId() == R.id.single_joint_option) {
-                //switcherSetup(desiredJoint, R.id.desired_joint);
-                desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
-                desiredJoint.setFactory(this);
-                desiredJoint.setText("does it show up?");
+                case(R.id.single_joint_option):
 
-                //switcherSetup(desiredJointPos, R.id.desired_joint_pos);
-                desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
-                desiredJointPos.setFactory(this);
-                desiredJointPos.setText("it should...");
+                case (R.id.showAllJoints):
+                    setContentView(R.layout.activity_measuring);
+                    return true;
 
-                setContentView(R.layout.show_joint);
+                case (R.id.showJoint1):
+                    setContentView(R.layout.show_joint);
+                    desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                    desiredJoint.setFactory(this);
+                    desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                    desiredJointPos.setFactory(this);
+                    desiredJointPos.setText("3.14159265");
+                    desiredJoint.setText("Joint X");
+                    jointSelected = true;
 
-//                switch (item.getItemId()) {
-//                    case R.id.showJoint1:
-//                        desiredJoint.setText("Joint 1");
-//                        jointSelected = true;
-//                    case R.id.showJoint2:
-//                        desiredJoint.setText("Joint 2");
-//                        jointSelected = true;
-//                    case R.id.showJoint3:
-//                        desiredJoint.setText("Joint 3");
-//                        jointSelected = true;
-//                    case R.id.showJoint4:
-//                        desiredJoint.setText("Joint 4");
-//                        jointSelected = true;
-//                    case R.id.showJoint5:
-//                        desiredJoint.setText("Joint 5");
-//                        jointSelected = true;
-//                    case R.id.showJoint6:
-//                        desiredJoint.setText("Joint 6");
-//                        jointSelected = true;
-//                    case R.id.showJoint7:
-//                        desiredJoint.setText("Joint 7");
-//                        jointSelected = true;
-//                    default:
-//                        jointSelected = false;
-//                        break;
-//                }
+                case (R.id.showJoint2):
+                    setContentView(R.layout.show_joint);
+                    desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                    desiredJoint.setFactory(this);
+                    desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                    desiredJointPos.setFactory(this);
+                    desiredJointPos.setText("3.14159265");
+                    desiredJoint.setText("Joint X");
+                    jointSelected = true;
 
-                //setContentView(R.layout.show_joint);
+                case (R.id.showJoint3):
+                    setContentView(R.layout.show_joint);
+                    desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                    desiredJoint.setFactory(this);
+                    desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                    desiredJointPos.setFactory(this);
+                    desiredJointPos.setText("3.14159265");
+                    desiredJoint.setText("Joint X");
+                    jointSelected = true;
+
+                case (R.id.showJoint4):
+                    setContentView(R.layout.show_joint);
+                    desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                    desiredJoint.setFactory(this);
+                    desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                    desiredJointPos.setFactory(this);
+                    desiredJointPos.setText("3.14159265");
+                    desiredJoint.setText("Joint X");
+                    jointSelected = true;
+
+                case (R.id.showJoint5):
+                    setContentView(R.layout.show_joint);
+                    desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                    desiredJoint.setFactory(this);
+                    desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                    desiredJointPos.setFactory(this);
+                    desiredJointPos.setText("3.14159265");
+                    desiredJoint.setText("Joint X");
+                    jointSelected = true;
+
+                case (R.id.showJoint6):
+                    setContentView(R.layout.show_joint);
+                    desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                    desiredJoint.setFactory(this);
+                    desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                    desiredJointPos.setFactory(this);
+                    desiredJointPos.setText("3.14159265");
+                    desiredJoint.setText("Joint X");
+                    jointSelected = true;
+
+                case (R.id.showJoint7):
+                    setContentView(R.layout.show_joint);
+                    desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                    desiredJoint.setFactory(this);
+                    desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                    desiredJointPos.setFactory(this);
+                    desiredJointPos.setText("3.14159265");
+                    desiredJoint.setText("Joint X");
+                    jointSelected = true;
+
+                default:
+                    setContentView(R.layout.show_joint);
+                    desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+                    desiredJoint.setFactory(this);
+                    desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+                    desiredJointPos.setFactory(this);
+                    desiredJointPos.setText("3.14159265");
+                    desiredJoint.setText("No Joint");
+                    jointSelected = true;
 
                 if (jointSelected) {
                     return jointSelected;
@@ -147,20 +191,9 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                     return super.onMenuItemSelected(featureId, item);
                 }
             }
-
-            else if (R.id.showAllJoints == item.getItemId())
-            {
-                setContentView(R.layout.activity_measuring);
-                return true;
-            }
-
-            else
-            {
-                return super.onMenuItemSelected(featureId, item);
-            }
         }
 
-        return super.onMenuItemSelected(featureId, item);
+        return onMenuItemSelected(featureId, item);
     }
 
     public View makeView(){
