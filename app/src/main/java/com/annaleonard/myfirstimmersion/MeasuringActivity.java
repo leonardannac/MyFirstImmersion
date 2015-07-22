@@ -52,6 +52,8 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         setContentView(R.layout.activity_measuring);
         Log.i("setContentView", " ");
 
+        // Justin is awesome
+
 //        for (int count =0; count< 7; count++)
 //        {
 //            final String xmlSwitcherId = new String ("joint" + count+1 );
