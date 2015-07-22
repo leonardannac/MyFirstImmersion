@@ -50,7 +50,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
         getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS);
         setContentView(R.layout.activity_measuring);
-        Log.i("setContentView", " ");
+        Log.i("setContentView", "message");
 
         // Justin is awesome
 
@@ -82,7 +82,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             public View makeView() {
                 TextView tv = new TextView(MeasuringActivity.this);
                 tv.setTextSize(20);
-                Log.i("mS1 makeView()", " ");
+                Log.i("mS1 makeView()", "message");
                 return tv;
             }
         });
@@ -90,7 +90,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             public View makeView() {
                 TextView tv = new TextView(MeasuringActivity.this);
                 tv.setTextSize(20);
-                Log.i("mS2 makeView()", " ");
+                Log.i("mS2 makeView()", "message");
                 return tv;
             }
         });
@@ -98,7 +98,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             public View makeView() {
                 TextView tv = new TextView(MeasuringActivity.this);
                 tv.setTextSize(20);
-                Log.i("mS3 makeView()", " ");
+                Log.i("mS3 makeView()", "message");
                 return tv;
             }
         });
@@ -106,7 +106,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             public View makeView() {
                 TextView tv = new TextView(MeasuringActivity.this);
                 tv.setTextSize(20);
-                Log.i("mS4 makeView()", " ");
+                Log.i("mS4 makeView()", "message");
                 return tv;
             }
         });
@@ -114,7 +114,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             public View makeView() {
                 TextView tv = new TextView(MeasuringActivity.this);
                 tv.setTextSize(20);
-                Log.i("mS5 makeView()", " ");
+                Log.i("mS5 makeView()", "message");
                 return tv;
             }
         });
@@ -122,7 +122,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             public View makeView() {
                 TextView tv = new TextView(MeasuringActivity.this);
                 tv.setTextSize(20);
-                Log.i("mS6 makeView()", " ");
+                Log.i("mS6 makeView()", "message");
                 return tv;
             }
         });
@@ -130,7 +130,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             public View makeView() {
                 TextView tv = new TextView(MeasuringActivity.this);
                 tv.setTextSize(20);
-                Log.i("mS7 makeView()", " ");
+                Log.i("mS7 makeView()", "message");
                 return tv;
             }
         });
@@ -218,10 +218,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
     public void startThread(){
-//        Log.i("startThread() called", " ");
+        Log.i("startThread() called", "message");
 
         try {
-//            Log.i("Entered try block.", " ");
+            Log.i("Entered try block.", "message");
             Thread thread = new Thread(new Runnable() {
 //                private DatagramSocket mSocket = new DatagramSocket(55056, InetAddress.getByName("10.1.17.188"));
                 private DatagramSocket mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
@@ -233,15 +233,20 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                 @Override
                 public void run() {
 
-//                    Log.i("thread.run.start"," ");
+                    Log.i("thread.run.start","message");
 
                     while (true) {
                         byte[] buf = new byte[56];
+                        Log.i("byte[] buf = new byte","msg");
                         mPacket = new DatagramPacket(buf, buf.length);
+                        Log.i("mPacket =","new DatagramPacket");
 
                         try {
+                            Log.i("second try block","msg");
                             Thread.sleep(10, 0);
+                            Log.i("before mS.receive","msg");
                             mSocket.receive(mPacket);
+                            Log.i("after mS.receive","msg");
 //                            byte[] data = mPacket.getData();
 
 
@@ -273,13 +278,13 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                                     joint5Switcher.setText(jointStringArray[4]);
                                     joint6Switcher.setText(jointStringArray[5]);
                                     joint7Switcher.setText(jointStringArray[6]);
-//                                    Log.i("Joint 1",joint1pos);
-//                                    Log.i("Joint 2",joint2pos);
-//                                    Log.i("Joint 3",joint3pos);
-//                                    Log.i("Joint 4",joint4pos);
-//                                    Log.i("Joint 5",joint5pos);
-//                                    Log.i("Joint 6",joint6pos);
-//                                    Log.i("Joint 7",joint7pos);
+                                    Log.i("Joint 1",joint1pos);
+                                    Log.i("Joint 2",joint2pos);
+                                    Log.i("Joint 3",joint3pos);
+                                    Log.i("Joint 4",joint4pos);
+                                    Log.i("Joint 5",joint5pos);
+                                    Log.i("Joint 6",joint6pos);
+                                    Log.i("Joint 7",joint7pos);
                                 }
                             });
 //                                double j1 = ByteBuffer.wrap(data).order(ByteOrder.LITTLE_ENDIAN).getDouble();
