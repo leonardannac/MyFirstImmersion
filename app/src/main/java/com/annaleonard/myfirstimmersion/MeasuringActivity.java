@@ -42,6 +42,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     private TextSwitcher[] jointSwitcherArray = {joint1Switcher,joint2Switcher,joint3Switcher,joint4Switcher,joint5Switcher,joint6Switcher,joint7Switcher};
     private int [] switcherId = {R.id.joint1switcher,R.id.joint2switcher, R.id.joint3switcher, R.id.joint4switcher, R.id.joint5switcher, R.id.joint6switcher, R.id.joint7switcher};
 
+    private volatile Thread backgroundThread;
+    private DatagramSocket mSocket;
+    private DatagramPacket mPacket;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +83,17 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 //            Log.i("mS.setText"," ");
 //        }
 
+    }
+//    @Override
+//    protected void onPause(){
+//        stopThread();
+//        super.onPause();
+//    }
+
+    @Override
+    protected void onDestroy(){
+        stopThread();
+        super.onDestroy();
     }
 
     @Override
@@ -154,79 +169,144 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
     public void startThread(){
-        Log.i("startThread() called", "message");
-
-        try {
-            Log.i("Entered try block.", "message");
-            Thread thread = new Thread(new Runnable() {
-//                private DatagramSocket mSocket = new DatagramSocket(55056, InetAddress.getByName("10.1.17.188"));
-                private DatagramSocket mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
-                private DatagramPacket mPacket;
-
-                @Override
-                public void run() {
-
-//                    Log.i("thread.run.start","message");
-
-                    while (true) {
-                        byte[] buf = new byte[56];
-//                        Log.i("byte[] buf = new byte","msg");
-                        mPacket = new DatagramPacket(buf, buf.length);
-//                        Log.i("mPacket =","new DatagramPacket");
-
-                        try {
-//                            Log.i("second try block","msg");
-                            Thread.sleep(10, 0);
-//                            Log.i("before mS.receive","msg");
-                            mSocket.receive(mPacket);
-//                            Log.i("after mS.receive","msg");
-
-                            double[] jointDoubleArray = new double[7];
-                            final String[] jointStringArray = new String[7];
-                            for(int i=0; i<7; i++){
-//                                int n = i+1;
-                                jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-                                jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));
-//                                Log.i("Joint "+n+" ", jointStringArray[i]);
-                            }
-
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run(){
-
-                                    for(int i=0; i<7; i++)
-                                    {
-                                        Log.i("Joint "+i+": ", jointStringArray[i]);
-                                        jointSwitcherArray[i].setText(jointStringArray[i]);
-                                    }
-
-                                }
-                            });
-
-                        } catch (IOException e) {
-                            Log.i("IOException ", e.getMessage());
-                        } catch (InterruptedException e) {
-                            Log.i("InterruptedException ", e.getMessage());
-                        }
-                    }
-
-                }
-
-            });
-            thread.start();
-        } catch (BindException e) {
-            Log.i("BindEx.",  e.getMessage());
-        } catch (ConnectException e) {
-            Log.i("ConnectEx.",  e.getMessage());
-        } catch (NoRouteToHostException e) {
-            Log.i("NoRouteToHostException.",  e.getMessage());
-        } catch (PortUnreachableException e) {
-            Log.i("PrtUnreachbleException.",  e.getMessage());
-        } catch (SocketException e) {
-            Log.i("SocketException",  e.getMessage());
-        } catch (UnknownHostException e) {
-            Log.i("UnknownHostException", e.getMessage());
-        }
+        backgroundThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runThread();
+            }
+        });
+        backgroundThread.start();
+//        Log.i("startThread() called", "message");
+//
+//        try {
+//            Log.i("Entered try block.", "message");
+//            Thread thread = new Thread(new Runnable() {
+////                private DatagramSocket mSocket = new DatagramSocket(55056, InetAddress.getByName("10.1.17.188"));
+//                private DatagramSocket mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
+//                private DatagramPacket mPacket;
+//
+//                @Override
+//                public void run() {
+//
+////                    Log.i("thread.run.start","message");
+//
+//                    while (true) {
+//                        byte[] buf = new byte[56];
+////                        Log.i("byte[] buf = new byte","msg");
+//                        mPacket = new DatagramPacket(buf, buf.length);
+////                        Log.i("mPacket =","new DatagramPacket");
+//
+//                        try {
+////                            Log.i("second try block","msg");
+//                            Thread.sleep(10, 0);
+////                            Log.i("before mS.receive","msg");
+//                            mSocket.receive(mPacket);
+////                            Log.i("after mS.receive","msg");
+//
+//                            double[] jointDoubleArray = new double[7];
+//                            final String[] jointStringArray = new String[7];
+//                            for(int i=0; i<7; i++){
+////                                int n = i+1;
+//                                jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+//                                jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));
+////                                Log.i("Joint "+n+" ", jointStringArray[i]);
+//                            }
+//
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run(){
+//
+//                                    for(int i=0; i<7; i++)
+//                                    {
+//                                        Log.i("Joint "+i+": ", jointStringArray[i]);
+//                                        jointSwitcherArray[i].setText(jointStringArray[i]);
+//                                    }
+//
+//                                }
+//                            });
+//
+//                        } catch (IOException e) {
+//                            Log.i("IOException ", e.getMessage());
+//                        } catch (InterruptedException e) {
+//                            Log.i("InterruptedException ", e.getMessage());
+//                        }
+//                    }
+//
+//                }
+//
+//            });
+//            thread.start();
+//        } catch (BindException e) {
+//            Log.i("BindEx.",  e.getMessage());
+//        } catch (ConnectException e) {
+//            Log.i("ConnectEx.",  e.getMessage());
+//        } catch (NoRouteToHostException e) {
+//            Log.i("NoRouteToHostException.",  e.getMessage());
+//        } catch (PortUnreachableException e) {
+//            Log.i("PrtUnreachbleException.",  e.getMessage());
+//        } catch (SocketException e) {
+//            Log.i("SocketException",  e.getMessage());
+//        } catch (UnknownHostException e) {
+//            Log.i("UnknownHostException", e.getMessage());
+//        }
     }
 
+    public void stopThread(){
+        backgroundThread = null;
+    }
+
+    public void runThread(){
+        Thread thisThread = Thread.currentThread();
+        if (mSocket == null){
+            Log.i("mSocket","null");
+            try {
+                mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
+            } catch (UnknownHostException e){
+                Log.i("UnknownHostException",e.getMessage());
+            } catch (SocketException e){
+                Log.i("SocketException",e.getMessage());
+            }
+        }
+        while (backgroundThread == thisThread) {
+//            Log.i("thread.run.start","message");
+            byte[] buf = new byte[56];
+//                        Log.i("byte[] buf = new byte","msg");
+            mPacket = new DatagramPacket(buf, buf.length);
+//                        Log.i("mPacket =","new DatagramPacket");
+                //DO THE THREAD WORK HERE
+
+            try {
+//                            Log.i("second try block","msg");
+                Thread.sleep(10, 0);
+//                            Log.i("before mS.receive","msg");
+                mSocket.receive(mPacket);
+//                            Log.i("after mS.receive","msg");
+
+                double[] jointDoubleArray = new double[7];
+                final String[] jointStringArray = new String[7];
+                for (int i = 0; i < 7; i++) {
+//                                int n = i+1;
+                    jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));
+//                                Log.i("Joint "+n+" ", jointStringArray[i]);
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 7; i++) {
+                            Log.i("Joint " + i + ": ", jointStringArray[i]);
+                            jointSwitcherArray[i].setText(jointStringArray[i]);
+                        }
+                    }
+                });
+            } catch (InterruptedException e) {
+                Log.i("InterruptedException",e.getMessage());
+            } catch (IOException e) {
+                Log.i("IOException",e.getMessage());
+            }
+        }
+        //close socket
+        mSocket.close();
+    }
 }
