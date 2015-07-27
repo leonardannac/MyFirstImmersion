@@ -84,14 +84,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 //        }
 
     }
-//    @Override
-//    protected void onPause(){
-//        stopThread();
-//        super.onPause();
-//    }
 
     @Override
     protected void onDestroy(){
+        mSocket.disconnect();
         stopThread();
         super.onDestroy();
     }
@@ -176,82 +172,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             }
         });
         backgroundThread.start();
-//        Log.i("startThread() called", "message");
-//
-//        try {
-//            Log.i("Entered try block.", "message");
-//            Thread thread = new Thread(new Runnable() {
-////                private DatagramSocket mSocket = new DatagramSocket(55056, InetAddress.getByName("10.1.17.188"));
-//                private DatagramSocket mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
-//                private DatagramPacket mPacket;
-//
-//                @Override
-//                public void run() {
-//
-////                    Log.i("thread.run.start","message");
-//
-//                    while (true) {
-//                        byte[] buf = new byte[56];
-////                        Log.i("byte[] buf = new byte","msg");
-//                        mPacket = new DatagramPacket(buf, buf.length);
-////                        Log.i("mPacket =","new DatagramPacket");
-//
-//                        try {
-////                            Log.i("second try block","msg");
-//                            Thread.sleep(10, 0);
-////                            Log.i("before mS.receive","msg");
-//                            mSocket.receive(mPacket);
-////                            Log.i("after mS.receive","msg");
-//
-//                            double[] jointDoubleArray = new double[7];
-//                            final String[] jointStringArray = new String[7];
-//                            for(int i=0; i<7; i++){
-////                                int n = i+1;
-//                                jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-//                                jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));
-////                                Log.i("Joint "+n+" ", jointStringArray[i]);
-//                            }
-//
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run(){
-//
-//                                    for(int i=0; i<7; i++)
-//                                    {
-//                                        Log.i("Joint "+i+": ", jointStringArray[i]);
-//                                        jointSwitcherArray[i].setText(jointStringArray[i]);
-//                                    }
-//
-//                                }
-//                            });
-//
-//                        } catch (IOException e) {
-//                            Log.i("IOException ", e.getMessage());
-//                        } catch (InterruptedException e) {
-//                            Log.i("InterruptedException ", e.getMessage());
-//                        }
-//                    }
-//
-//                }
-//
-//            });
-//            thread.start();
-//        } catch (BindException e) {
-//            Log.i("BindEx.",  e.getMessage());
-//        } catch (ConnectException e) {
-//            Log.i("ConnectEx.",  e.getMessage());
-//        } catch (NoRouteToHostException e) {
-//            Log.i("NoRouteToHostException.",  e.getMessage());
-//        } catch (PortUnreachableException e) {
-//            Log.i("PrtUnreachbleException.",  e.getMessage());
-//        } catch (SocketException e) {
-//            Log.i("SocketException",  e.getMessage());
-//        } catch (UnknownHostException e) {
-//            Log.i("UnknownHostException", e.getMessage());
-//        }
     }
 
     public void stopThread(){
+        mSocket.close();
         backgroundThread = null;
     }
 
@@ -306,7 +230,5 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                 Log.i("IOException",e.getMessage());
             }
         }
-        //close socket
-        mSocket.close();
     }
 }
