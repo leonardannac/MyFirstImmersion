@@ -58,13 +58,15 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
         // Justin is awesome
         // This does not allow you to directly change the size of the textSwitchers.
-        for (int count =0; count< 7; count++)
-        {
-            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);//attaches each switcher to its xml id
-            jointSwitcherArray[count].setFactory(this);
-            jointSwitcherArray[count].setText("0.00");
-            Log.i("mS.setText", String.valueOf(count));
-        }
+//        for (int count =0; count< 7; count++)
+//        {
+//            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);//attaches each switcher to its xml id
+//            jointSwitcherArray[count].setFactory(this);
+//            jointSwitcherArray[count].setText("0.00");
+//            Log.i("mS.setText", String.valueOf(count));
+//        }
+
+        makeAllJointTextSwitchers();
         // This works the same as the loop above but allows more control over the size of the textSwitchers.
 //        for (int count =0; count< 7; count++)
 //        {
@@ -143,6 +145,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                     return true;
                 case R.id.showAllJoints:
                     setContentView(R.layout.activity_measuring);
+                    makeAllJointTextSwitchers();
 //                    setContentView(R.layout.show_all_joints);
                     return true;
                 default:
@@ -150,6 +153,16 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             }
         }
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    public void makeAllJointTextSwitchers(){
+        for (int count =0; count< 7; count++)
+        {
+            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);//attaches each switcher to its xml id
+            jointSwitcherArray[count].setFactory(this);
+            jointSwitcherArray[count].setText("0.00");
+            Log.i("mS.setText", String.valueOf(count));
+        }
     }
 
     public View makeView(){
@@ -210,12 +223,41 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                 final String[] jointStringArray = new String[7];
                 for (int i = 0; i < 7; i++) {
 //                                int n = i+1;
-                    jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));
+                    jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(i*8);
+//                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));
+                    jointStringArray[i] = String.valueOf(jointDoubleArray[i]);
 //                                Log.i("Joint "+n+" ", jointStringArray[i]);
                 }
 
-                runOnUiThread(new Runnable() {
+
+                runOnUiThread(new Runnable() {//                jointDoubleArray[0] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(0);
+//                jointStringArray[0] = String.valueOf(Math.toRadians(jointDoubleArray[0]));
+//                Log.i("Joint 1 ", jointStringArray[0]);
+//
+//                jointDoubleArray[1] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(1);
+//                jointStringArray[1] = String.valueOf(Math.toRadians(jointDoubleArray[1]));
+//                Log.i("Joint 2 ", jointStringArray[1]);
+//
+//                jointDoubleArray[2] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+//                jointStringArray[2] = String.valueOf(Math.toRadians(jointDoubleArray[2]));
+//                Log.i("Joint 3 ", jointStringArray[2]);
+//
+//                jointDoubleArray[3] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+//                jointStringArray[3] = String.valueOf(Math.toRadians(jointDoubleArray[3]));
+//                Log.i("Joint 4 ", jointStringArray[3]);
+//
+//                jointDoubleArray[4] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+//                jointStringArray[4] = String.valueOf(Math.toRadians(jointDoubleArray[4]));
+//                Log.i("Joint 5 ", jointStringArray[4]);
+//
+//                jointDoubleArray[5] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+//                jointStringArray[5] = String.valueOf(Math.toRadians(jointDoubleArray[5]));
+//                Log.i("Joint 6 ", jointStringArray[5]);
+//
+//                jointDoubleArray[6] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
+//                jointStringArray[6] = String.valueOf(Math.toRadians(jointDoubleArray[6]));
+//                Log.i("Joint 7 ", jointStringArray[6]);
+
                     @Override
                     public void run() {
                         for (int i = 0; i < 7; i++) {
