@@ -19,7 +19,6 @@ import android.widget.ViewSwitcher;
 
 import com.google.android.glass.media.Sounds;
 import com.google.android.glass.view.WindowUtils;
-import com.google.android.glass.view.WindowUtils;
 
 import java.io.IOException;
 import java.net.BindException;
@@ -33,16 +32,18 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.DecimalFormat;
 
 public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFactory, View.OnClickListener {
-
-    String joint1pos, joint2pos,joint3pos,joint4pos,joint5pos,joint6pos,joint7pos;
-    private EditText desiredJoint, desiredJointPos;
-    private TextSwitcher joint1Switcher,joint2Switcher,joint3Switcher,joint4Switcher,joint5Switcher,joint6Switcher,joint7Switcher;
+    //TextSwitchers and ids that are used to update the xml layout displayed on the glass
+    private TextSwitcher joint1Switcher,joint2Switcher,joint3Switcher,joint4Switcher,joint5Switcher,joint6Switcher,joint7Switcher;  //even though these are grayed out, you can't delete them
     private TextSwitcher[] jointSwitcherArray = {joint1Switcher,joint2Switcher,joint3Switcher,joint4Switcher,joint5Switcher,joint6Switcher,joint7Switcher};
     private int [] switcherId = {R.id.joint1switcher,R.id.joint2switcher, R.id.joint3switcher, R.id.joint4switcher, R.id.joint5switcher, R.id.joint6switcher, R.id.joint7switcher};
 
-    private volatile Thread backgroundThread;
+    DecimalFormat jointPosFormat = new DecimalFormat("0.00");   //format to specify sig figs
+
+    private volatile Thread backgroundThread;   //flag to cleanly stop background thread
+
     private DatagramSocket mSocket;
     private DatagramPacket mPacket;
 
@@ -52,44 +53,15 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
         startThread();
 
-        getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS);
-        setContentView(R.layout.activity_measuring);
-        Log.i("setContentView", "message");
-
-        // Justin is awesome
-        // This does not allow you to directly change the size of the textSwitchers.
-//        for (int count =0; count< 7; count++)
-//        {
-//            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);//attaches each switcher to its xml id
-//            jointSwitcherArray[count].setFactory(this);
-//            jointSwitcherArray[count].setText("0.00");
-//            Log.i("mS.setText", String.valueOf(count));
-//        }
+        getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS); //Enable voice activated menu
+        setContentView(R.layout.activity_measuring);    //Set the desired layout to display on screen
 
         makeAllJointTextSwitchers();
-        // This works the same as the loop above but allows more control over the size of the textSwitchers.
-//        for (int count =0; count< 7; count++)
-//        {
-////            final String xmlSwitcherId = new String ("joint" + count+1 );
-//            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);
-////            jointSwitcherArray[count].setFactory(this);
-//            jointSwitcherArray[count].setFactory(new ViewSwitcher.ViewFactory() {
-//                public View makeView() {
-//                    TextView tv = new TextView(MeasuringActivity.this);
-//                    tv.setTextSize(22);
-////                    Log.i("mS makeView() ",xmlSwitcherId);
-//                    return tv;
-//                }
-//            });
-//            jointSwitcherArray[count].setText("0.00");
-//            Log.i("mS.setText"," ");
-//        }
 
     }
 
     @Override
     protected void onDestroy(){
-        mSocket.disconnect();
         stopThread();
         super.onDestroy();
     }
@@ -129,24 +101,19 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                     return true;
                 case R.id.showJoint4:
                     setContentView(R.layout.show_joint);
-//                    setContentView(R.layout.show_joint_4);
                     return true;
                 case R.id.showJoint5:
                     setContentView(R.layout.show_joint);
-//                    setContentView(R.layout.show_joint_5);
                     return true;
                 case R.id.showJoint6:
                     setContentView(R.layout.show_joint);
-//                    setContentView(R.layout.show_joint_6);
                     return true;
                 case R.id.showJoint7:
                     setContentView(R.layout.show_joint);
-//                    setContentView(R.layout.show_joint_7);
                     return true;
                 case R.id.showAllJoints:
                     setContentView(R.layout.activity_measuring);
                     makeAllJointTextSwitchers();
-//                    setContentView(R.layout.show_all_joints);
                     return true;
                 default:
                     return super.onMenuItemSelected(featureId, item);
@@ -156,16 +123,31 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
     public void makeAllJointTextSwitchers(){
+//        for (int count =0; count< 7; count++)
+//        {
+//            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]); //attaches each switcher to its xml id
+//            jointSwitcherArray[count].setFactory(this);
+//            jointSwitcherArray[count].setText("0.00");
+//            Log.i("mS.setText", String.valueOf(count));
+//        }
+
         for (int count =0; count< 7; count++)
         {
-            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);//attaches each switcher to its xml id
-            jointSwitcherArray[count].setFactory(this);
+            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);
+            jointSwitcherArray[count].setFactory(new ViewSwitcher.ViewFactory() {
+                public View makeView() {
+                    TextView tv = new TextView(MeasuringActivity.this);
+                    tv.setTextSize(22);
+                    return tv;
+                }
+            });
             jointSwitcherArray[count].setText("0.00");
-            Log.i("mS.setText", String.valueOf(count));
+            Log.i("mS.setText"," ");
         }
     }
 
     public View makeView(){
+        //unsure where this is called but required -> might be default of .setFactory()
         TextView t = new TextView(this);
         t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
         t.setTextSize(28);
@@ -173,11 +155,13 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
     public void onClick(View v){
+        //This doesn't work but is also necessary. Could be that voice menu overrides the touch menu completely
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         am.playSoundEffect(Sounds.DISALLOWED);
     }
 
     public void startThread(){
+        //Create a thread, define it's run() method, and start the thread
         backgroundThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -188,13 +172,13 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
     public void stopThread(){
-        mSocket.close();
-        backgroundThread = null;
+        mSocket.close();    //Socket must be closed here or 'SocketException: bind failed: EADDRINUSE'
+        backgroundThread = null;    //Asks the thread to stop nicely by setting flag var
     }
 
     public void runThread(){
         Thread thisThread = Thread.currentThread();
-        if (mSocket == null){
+        if (mSocket == null){   //possibly can get rid of this check if the socket exists
             Log.i("mSocket","null");
             try {
                 mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
@@ -204,59 +188,25 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                 Log.i("SocketException",e.getMessage());
             }
         }
-        while (backgroundThread == thisThread) {
-//            Log.i("thread.run.start","message");
+        while (backgroundThread == thisThread) {    //while backgroundThread has not been asked to stop
             byte[] buf = new byte[56];
-//                        Log.i("byte[] buf = new byte","msg");
             mPacket = new DatagramPacket(buf, buf.length);
-//                        Log.i("mPacket =","new DatagramPacket");
-                //DO THE THREAD WORK HERE
 
             try {
-//                            Log.i("second try block","msg");
                 Thread.sleep(10, 0);
-//                            Log.i("before mS.receive","msg");
                 mSocket.receive(mPacket);
-//                            Log.i("after mS.receive","msg");
 
                 double[] jointDoubleArray = new double[7];
                 final String[] jointStringArray = new String[7];
                 for (int i = 0; i < 7; i++) {
-//                                int n = i+1;
                     jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(i*8);
-//                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));
-                    jointStringArray[i] = String.valueOf(jointDoubleArray[i]);
-//                                Log.i("Joint "+n+" ", jointStringArray[i]);
+//                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));  //convert to Radians
+                    jointStringArray[i] = String.valueOf(jointPosFormat.format(jointDoubleArray[i]));
                 }
 
-
-                runOnUiThread(new Runnable() {//                jointDoubleArray[0] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(0);
-//                jointStringArray[0] = String.valueOf(Math.toRadians(jointDoubleArray[0]));
-//                Log.i("Joint 1 ", jointStringArray[0]);
-//
-//                jointDoubleArray[1] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(1);
-//                jointStringArray[1] = String.valueOf(Math.toRadians(jointDoubleArray[1]));
-//                Log.i("Joint 2 ", jointStringArray[1]);
-//
-//                jointDoubleArray[2] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-//                jointStringArray[2] = String.valueOf(Math.toRadians(jointDoubleArray[2]));
-//                Log.i("Joint 3 ", jointStringArray[2]);
-//
-//                jointDoubleArray[3] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-//                jointStringArray[3] = String.valueOf(Math.toRadians(jointDoubleArray[3]));
-//                Log.i("Joint 4 ", jointStringArray[3]);
-//
-//                jointDoubleArray[4] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-//                jointStringArray[4] = String.valueOf(Math.toRadians(jointDoubleArray[4]));
-//                Log.i("Joint 5 ", jointStringArray[4]);
-//
-//                jointDoubleArray[5] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-//                jointStringArray[5] = String.valueOf(Math.toRadians(jointDoubleArray[5]));
-//                Log.i("Joint 6 ", jointStringArray[5]);
-//
-//                jointDoubleArray[6] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-//                jointStringArray[6] = String.valueOf(Math.toRadians(jointDoubleArray[6]));
-//                Log.i("Joint 7 ", jointStringArray[6]);
+                //This method says 'hey UI thread! i don't know what to do with this. can you run this code?'
+                //All methods and variables available in the UI thread are available inside runOnUiThread
+                runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
@@ -266,11 +216,12 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                         }
                     }
                 });
+
             } catch (InterruptedException e) {
                 Log.i("InterruptedException",e.getMessage());
             } catch (IOException e) {
                 Log.i("IOException",e.getMessage());
             }
-        }
+        }   //Justin Brannan is awesome and helps poor lost souls with git.
     }
 }
