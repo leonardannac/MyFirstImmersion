@@ -18,6 +18,7 @@
     <string name="joint6">Joint 6: </string>
     <string name="joint7">Joint 7: </string>
 
+    <string name="single_joint_trigger">Show Joint</string>
     <string name="joint_1_trigger">1</string>
     <string name="joint_2_trigger">2</string>
     <string name="joint_3_trigger">3</string>
@@ -26,5 +27,7 @@
     <string name="joint_6_trigger">6</string>
     <string name="joint_7_trigger">7</string>
     <string name="all_joints_trigger">Show All Joints</string>
+
+    <string name="single_joint_title">Single Joint Display</string>
 
 </resources>

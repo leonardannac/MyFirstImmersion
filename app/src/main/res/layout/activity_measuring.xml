@@ -12,12 +12,15 @@
         android:layout_height="wrap_content"
         android:text="@string/joint1"
         android:gravity="center_horizontal"
-        android:textColor="#ddbb11"/>
+        android:textColor="#ddbb11"
+        android:textSize = "22dp"
+        />
     <TextView
         android:id="@+id/joint2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/joint2"
+        android:textSize = "22dp"
         android:layout_below="@+id/joint1"
         android:textColor="#99cc33"/>
     <TextView
@@ -25,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/joint3"
+        android:textSize = "22dp"
         android:layout_below="@+id/joint2"
         android:textColor="#cc3333"/>
     <TextView
@@ -33,11 +37,13 @@
         android:layout_height="wrap_content"
         android:text="@string/joint4"
         android:layout_below="@+id/joint3"
+        android:textSize = "22dp"
         android:textColor="#34a7ff"/>
     <TextView
         android:id="@+id/joint5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize = "22dp"
         android:text="@string/joint5"
         android:layout_below="@+id/joint4"
         android:textColor="#808080"/>
@@ -46,11 +52,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/joint6"
+        android:textSize = "22dp"
         android:layout_below="@+id/joint5"
         android:textColor="#ffffff"/>
     <TextView
         android:id="@+id/joint7"
         android:layout_width="wrap_content"
+        android:textSize = "22dp"
         android:layout_height="wrap_content"
         android:text="@string/joint7"
         android:layout_below="@+id/joint6" />

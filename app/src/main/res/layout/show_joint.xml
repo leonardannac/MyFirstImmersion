@@ -3,15 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
+
+    <TextSwitcher
+        android:id="@+id/desired_joint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></TextSwitcher>
+    <TextSwitcher
+        android:id="@+id/desired_joint_pos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You chose a joint 4-7,"
-        android:id="@+id/desiredJoint"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="but I'm not ready yet."
-        android:id="@+id/desiredJointPos"/>
+        android:textSize = "40sp"
+
+        ></TextSwitcher>
 
 </LinearLayout>
