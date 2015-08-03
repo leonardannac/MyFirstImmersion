@@ -2,19 +2,15 @@ package com.annaleonard.myfirstimmersion;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
@@ -23,19 +19,14 @@ import com.google.android.glass.media.Sounds;
 import com.google.android.glass.view.WindowUtils;
 
 import java.io.IOException;
-import java.net.BindException;
-import java.net.ConnectException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.NoRouteToHostException;
-import java.net.PortUnreachableException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 
 public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFactory, View.OnClickListener {
     //TextSwitchers and ids that are used to update the xml layout displayed on the glass
@@ -119,7 +110,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
                 case (R.id.single_joint_option):
                     //sets view to single joint layout, but does not set switchers
-                    setContentView(R.layout.show_joint);
+                    setContentView(R.layout.show_1_joint);
                     makeSingleJointTextSwitchers();
                     break;
 

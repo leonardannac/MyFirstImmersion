@@ -29,5 +29,6 @@
     <string name="all_joints_trigger">Show All Joints</string>
 
     <string name="single_joint_title">Single Joint Display</string>
+    <string name="example_joint_value">163.51</string>
 
 </resources>

@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="android:Theme.DeviceDefault"></style>
+    <style name="AppTheme" parent="android:Theme.DeviceDefault">
+        <item name="android:actionMenuTextAppearance">@style/MeasuringActivityMenuTheme</item>
+    </style>
+    <style name="MeasuringActivityTheme" parent="AppTheme">
+
+    </style>
+    <style name="MeasuringActivityMenuTheme" parent="AppTheme">
+        <item name="android:textSize">22dp</item>
+    </style>
+
+
 </resources>
