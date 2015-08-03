@@ -3,6 +3,13 @@
     tools:context="com.annaleonard.myfirstimmersion.MeasuringActivity"
     >
 
+   <!--
+    <item
+        android:id="@+id/double_joint_option"
+        android:title = "@string/double_joint_trigger"
+        android:orderInCategory="1"/> -->
+
+
     <item
         android:id="@+id/single_joint_option"
         android:title="@string/single_joint_trigger">
@@ -48,5 +55,5 @@
     <item
         android:id="@+id/showAllJoints"
         android:title="@string/all_joints_trigger"
-        android:orderInCategory="8"/>
+        android:orderInCategory="3"/>
 </menu>

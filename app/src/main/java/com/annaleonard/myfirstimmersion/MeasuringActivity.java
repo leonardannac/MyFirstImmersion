@@ -6,6 +6,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,18 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
     private DatagramSocket mSocket;
     private DatagramPacket mPacket;
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+            AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            am.playSoundEffect(Sounds.TAP);
+            openOptionsMenu();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     //On Create is called when the application is first opened
     //The bundle saves the state of the app in case the app is being reopened.
@@ -107,6 +120,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                     makeAllJointTextSwitchers();
                     whichJoint = -1;
                     return true;
+
+//                case (R.id.double_joint_option):
+//                    setContentView(R.layout.show_2_joints);
+//                    break;
 
                 case (R.id.single_joint_option):
                     //sets view to single joint layout, but does not set switchers
@@ -216,7 +233,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
     public void onClick(View v){
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        am.playSoundEffect(Sounds.DISALLOWED);
+        am.playSoundEffect(Sounds.SUCCESS);
     }
 
 
@@ -224,7 +241,6 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
     final String[] jointStringArray = new String[7];
     //The background thread where all the data collection occurs
-    int threadLoops = 0;
     public void startThread(){
         //Create a thread, define it's run() method, and start the thread
         backgroundThread = new Thread(new Runnable() {
@@ -297,117 +313,4 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             }
         }   //Justin Brannan is awesome and helps poor lost souls with git.
     }
-
-
-
-//    public void startThread()
-//        {
-//            Log.i("startThread() called", String.valueOf(threadLoops) );
-//            try {
-//                Log.i("Entered try block.", " ");
-//                Thread thread = new Thread(new Runnable()
-//                {
-//                    private DatagramSocket mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
-//                    private DatagramPacket mPacket;
-//
-////                    Log.i("passed creating socket and packet"."");
-//                    @Override
-//
-//                    public void run()
-//                    {
-//
-//                        Log.i("thread.run.start"," ");
-//
-//                        while (true)
-//                        {
-//                            byte[] buf = new byte[56];
-//                            mPacket = new DatagramPacket(buf, buf.length);
-//
-//                            runOnUiThread(new Runnable()
-//                            {
-//                                @Override
-//                            public void run(){
-//                                    Log.i ("UI initiate setText", "Outside Try");
-//
-//                                    if (whichJoint != -1)
-//                                    {
-//                                        desiredJointPos.setText("Please Work");
-//                                    }
-//                                    else {
-//                                        for (int i = 0; i < 7; i++) {
-//                                            Log.i("Joint " + i, "");
-//                                            jointSwitcherArray[i].setText(String.valueOf(i));
-//                                        }
-//                                    }
-//                                }
-//                            });
-//                            try
-//                            {
-//                                Thread.sleep(10, 0);
-//                                mSocket.receive(mPacket);
-//                                byte[] data = mPacket.getData();
-//
-//
-////                                byte[] j2byte = Arrays.copyOfRange(byte[] buff, int 8, int 15);
-//                                double[] jointDoubleArray = new double[7];
-//                                for(int i=0; i<7; i++)
-//                                {
-//                                    int n = i+1;
-//                                    jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble();
-//                                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));
-//    //                                Log.i("Joint "+n+" ", jointStringArray[i]);
-//                                }
-//
-//
-//
-//
-//                                    runOnUiThread(new Runnable() {
-//                                        @Override
-//                                        public void run() {
-//                                            if (whichJoint!=-1)
-//                                            {
-//                                                desiredJointPos.setText(jointStringArray[whichJoint-1]);
-//
-//                                            }
-//
-//                                            else {
-//                                                jointSwitcherArray[0].setText("0");
-//                                            }
-//
-////                                            for (int i = 0; i < 7; i++)
-////                                            {
-////                                                Log.i("Joint " + i + ": ", jointStringArray[0]);
-////                                                jointSwitcherArray[i].setText(jointStringArray[i]);
-////                                            }
-//
-//    //
-//                                        }
-//                                    });
-//
-//                        } catch (IOException e) {
-//                            Log.i("IOException ", e.getMessage());
-//                        } catch (InterruptedException e) {
-//                            Log.i("InterruptedException ", e.getMessage());
-//                        }
-//                    }
-//
-//                }
-//
-//            });
-//            thread.start();
-//        } catch (BindException e) {
-//            Log.i("BindEx.",  e.getMessage());
-//        } catch (ConnectException e) {
-//            Log.i("ConnectEx.",  e.getMessage());
-//        } catch (NoRouteToHostException e) {
-//            Log.i("NoRouteToHostException.",  e.getMessage());
-//        } catch (PortUnreachableException e) {
-//            Log.i("PrtUnreachbleException.",  e.getMessage());
-//        } catch (SocketException e) {
-//            Log.i("SocketException",  e.getMessage());
-//        } catch (UnknownHostException e) {
-//            Log.i("UnknownHostException", e.getMessage());
-//        }
-//    threadLoops ++;
-//    }
 }
