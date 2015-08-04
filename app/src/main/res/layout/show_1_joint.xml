@@ -17,16 +17,22 @@
         >
 
         <!-- Put your widgets inside this RelativeLayout. -->
-        <TextSwitcher
-            android:id="@+id/desired_joint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextSwitcher
-            android:id="@+id/desired_joint_pos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize = "40sp"
-            android:layout_below="@+id/desired_joint"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextSwitcher
+                android:id="@+id/desired_joint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextSwitcher
+                android:id="@+id/desired_joint_pos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize = "40sp"/>
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 

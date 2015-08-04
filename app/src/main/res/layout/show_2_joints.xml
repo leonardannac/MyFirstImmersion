@@ -25,7 +25,7 @@ android:layout_height="match_parent"
 
     <LinearLayout
         android:id="@+id/joint_a"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_alignParentLeft="true"
@@ -51,7 +51,7 @@ android:layout_height="match_parent"
 
     <LinearLayout
         android:id="@+id/joint_b"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_alignParentRight="true"

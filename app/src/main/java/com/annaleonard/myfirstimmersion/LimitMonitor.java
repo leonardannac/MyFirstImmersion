@@ -1,5 +1,13 @@
 package com.annaleonard.myfirstimmersion;
 
+import android.app.AlarmManager;
+import android.content.Context;
+import android.graphics.Color;
+import android.media.AudioManager;
+import android.view.View;
+
+import com.google.android.glass.media.Sounds;
+
 /**
  * Created by jelong3 on 8/3/15.
  */
@@ -42,6 +50,21 @@ public class LimitMonitor {
             {
                 limitHit[i] = true;
             }
+        }
+    }
+
+    public void updateGUI(View v, int whichJoint)
+    {
+        if(!limitHit[whichJoint])
+        {
+            v.setBackgroundColor(Color.RED);
+            AudioManager am = (AudioManager) v.getContext().getSystemService(Context.AUDIO_SERVICE);
+            am.playSoundEffect(Sounds.ERROR);
+        }
+
+        else
+        {
+            v.setBackgroundColor(Color.BLACK);
         }
     }
 

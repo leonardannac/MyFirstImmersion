@@ -35,6 +35,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     private TextSwitcher [] jointSwitcherArray = new TextSwitcher[7];    //Array containing text switchers for all joints view
     private TextSwitcher desiredJoint, desiredJointPos;    //Text Switchers for single joints view
     private int [] switcherId = {R.id.joint_a_val,R.id.joint_b_val, R.id.joint_c_val, R.id.joint_d_val, R.id.joint_e_val, R.id.joint_f_val, R.id.joint_g_val};    //xml locations of switchers for all joints view
+    private int [] layoutId = {R.id.joint_a, R.id.joint_b, R.id.joint_c, R.id.joint_d, R.id.joint_e, R.id.joint_f, R.id.joint_g};
 
     DecimalFormat jointPosFormat = new DecimalFormat("0.00");   //format to specify sig figs
 
@@ -130,6 +131,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                     //sets view to single joint layout, but does not set switchers
                     setContentView(R.layout.show_1_joint);
                     makeSingleJointTextSwitchers();
+                    whichJoint=0;
                     break;
 
                 //each option below individually sets the switchers in the single joint view to display the name and data for that particular joint.
@@ -192,7 +194,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                 }
             });
             jointSwitcherArray[count].setText("0.00");
-            Log.i("mS.setText"," ");
+//            Log.i("mS.setText"," ");
         }
     }
 
@@ -262,13 +264,13 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     public void runThread(){
         Thread thisThread = Thread.currentThread();
         if (mSocket == null){   //possibly can get rid of this check if the socket exists
-            Log.i("mSocket","null");
+//            Log.i("mSocket","null");
             try {
                 mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
             } catch (UnknownHostException e){
-                Log.i("UnknownHostException",e.getMessage());
+//                Log.i("UnknownHostException",e.getMessage());
             } catch (SocketException e){
-                Log.i("SocketException",e.getMessage());
+//                Log.i("SocketException",e.getMessage());
             }
         }
         while (backgroundThread == thisThread) {    //while backgroundThread has not been asked to stop
@@ -283,9 +285,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
                 for (int i = 0; i < 7; i++) {
                     jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(i * 8);
-//                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));  //convert to Radians
                     jointStringArray[i] = String.valueOf(jointPosFormat.format(jointDoubleArray[i]));
                 }
+
+
                 final LimitMonitor onlyOne = new LimitMonitor(jointDoubleArray);
 
                 //This method says 'hey UI thread! i don't know what to do with this. can you run this code?'
@@ -297,24 +300,23 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
                         if (whichJoint == -1) {
                             for (int i = 0; i < 7; i++) {
-                                Log.i("Joint " + i + ": ", jointStringArray[i]);
-                                if(!(onlyOne.getLimitHit()[i]))
-                                {
-                                    jointSwitcherArray[i].setBackgroundColor(Color.RED);
-                                }
+//                                Log.i("Joint " + i + ": ", jointStringArray[i]);
+                                onlyOne.updateGUI(findViewById(layoutId[i]), i);
                                 jointSwitcherArray[i].setText(jointStringArray[i]);
                             }
                         } else {
-                            desiredJointPos.setText(jointStringArray[whichJoint - 1]);
+                            if (whichJoint > 0) {
+                                desiredJointPos.setText(jointStringArray[whichJoint - 1]);
+                                onlyOne.updateGUI(findViewById(R.id.layout), whichJoint - 1 );
+                            }
                         }
-
                     }
                 });
 
             } catch (InterruptedException e) {
-                Log.i("InterruptedException",e.getMessage());
+//                Log.i("InterruptedException",e.getMessage());
             } catch (IOException e) {
-                Log.i("IOException",e.getMessage());
+//                Log.i("IOException",e.getMessage());
             }
         }   //Justin Brannan is awesome and helps poor lost souls with git.
     }
