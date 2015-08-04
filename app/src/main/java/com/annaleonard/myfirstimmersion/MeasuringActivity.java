@@ -2,6 +2,7 @@ package com.annaleonard.myfirstimmersion;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,7 +34,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     //TextSwitchers and ids that are used to update the xml layout displayed on the glass
     private TextSwitcher [] jointSwitcherArray = new TextSwitcher[7];    //Array containing text switchers for all joints view
     private TextSwitcher desiredJoint, desiredJointPos;    //Text Switchers for single joints view
-    private int [] switcherId = {R.id.joint1switcher,R.id.joint2switcher, R.id.joint3switcher, R.id.joint4switcher, R.id.joint5switcher, R.id.joint6switcher, R.id.joint7switcher};    //xml locations of switchers for all joints view
+    private int [] switcherId = {R.id.joint_a_val,R.id.joint_b_val, R.id.joint_c_val, R.id.joint_d_val, R.id.joint_e_val, R.id.joint_f_val, R.id.joint_g_val};    //xml locations of switchers for all joints view
 
     DecimalFormat jointPosFormat = new DecimalFormat("0.00");   //format to specify sig figs
 
@@ -181,11 +182,12 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     public void makeAllJointTextSwitchers(){
         for (int count =0; count< 7; count++)
         {
+            final int i=count;
             jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);
             jointSwitcherArray[count].setFactory(new ViewSwitcher.ViewFactory() {
                 public View makeView() {
                     TextView tv = new TextView(MeasuringActivity.this);
-                    tv.setTextSize(22);
+                    tv.setTextSize(26);
                     return tv;
                 }
             });
@@ -279,10 +281,12 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
                 double[] jointDoubleArray = new double[7];
                 for (int i = 0; i < 7; i++) {
-                    jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(i*8);
+                    jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(i * 8);
 //                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));  //convert to Radians
                     jointStringArray[i] = String.valueOf(jointPosFormat.format(jointDoubleArray[i]));
                 }
+                LimitMonitor onlyOne = new LimitMonitor(jointDoubleArray);
+                onlyOne.isAnyLimitHit();
 
                 //This method says 'hey UI thread! i don't know what to do with this. can you run this code?'
                 //All methods and variables available in the UI thread are available inside runOnUiThread
@@ -291,16 +295,13 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                     @Override
                     public void run() {
 
-                        if(whichJoint == -1)
-                        {
+                        if (whichJoint == -1) {
                             for (int i = 0; i < 7; i++) {
                                 Log.i("Joint " + i + ": ", jointStringArray[i]);
                                 jointSwitcherArray[i].setText(jointStringArray[i]);
                             }
-                        }
-                        else
-                        {
-                            desiredJointPos.setText(jointStringArray[whichJoint-1]);
+                        } else {
+                            desiredJointPos.setText(jointStringArray[whichJoint - 1]);
                         }
 
                     }

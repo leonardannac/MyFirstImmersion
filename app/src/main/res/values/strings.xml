@@ -10,13 +10,13 @@
     <string name="start_measuring">Start Measuring</string>
     <string name="title_activity_measuring">MeasuringActivity</string>
 
-    <string name="joint1">Joint 1: </string>
-    <string name="joint2">Joint 2: </string>
-    <string name="joint3">Joint 3: </string>
-    <string name="joint4">Joint 4: </string>
-    <string name="joint5">Joint 5: </string>
-    <string name="joint6">Joint 6: </string>
-    <string name="joint7">Joint 7: </string>
+    <string name="joint1">Joint 1: \u0020</string>
+    <string name="joint2">Joint 2: \u0020</string>
+    <string name="joint3">Joint 3: \u0020</string>
+    <string name="joint4">Joint 4: \u0020</string>
+    <string name="joint5">Joint 5: \u0020</string>
+    <string name="joint6">Joint 6: \u0020</string>
+    <string name="joint7">Joint 7: \u0020</string>
 
     <string name="double_joint_trigger">Show 2 Joints</string>
     <string name="single_joint_trigger">Show Joint</string>

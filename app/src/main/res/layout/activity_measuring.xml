@@ -1,3 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/body_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/glass_card_body_height"
+        android:layout_marginLeft="@dimen/glass_card_margin"
+        android:layout_marginTop="@dimen/glass_card_margin"
+        android:layout_marginRight="@dimen/glass_card_margin"
+        tools:ignore="UselessLeaf"
+        >
+
+        <!-- Put your widgets inside this RelativeLayout. -->
+
+        <View
+            android:id="@+id/middle_line"
+            android:layout_width="1dp"
+            android:layout_height= "fill_parent"
+            android:layout_centerHorizontal="true"  />
+
+
+        <LinearLayout
+            android:id="@+id/joint_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_a_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint1"
+                android:textSize = "26sp"
+                android:gravity="center_horizontal"/>
+            <TextSwitcher
+                android:id="@+id/joint_a_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/joint_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/joint_a"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_b_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint2"
+                android:textSize = "26sp"/>
+            <TextSwitcher
+                android:id="@+id/joint_b_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/joint_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below = "@id/joint_b"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_c_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint3"
+                android:textSize = "26sp"/>
+            <TextSwitcher
+                android:id="@+id/joint_c_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/joint_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/joint_c"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_d_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint4"
+                android:textSize = "26sp"/>
+            <TextSwitcher
+                android:id="@+id/joint_d_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/stagger"
+            android:layout_width="fill_parent"
+            android:layout_height= "13sp"
+            android:layout_centerHorizontal="true"  />
+
+
+        <LinearLayout
+            android:id="@+id/joint_e"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/middle_line"
+            android:layout_below ="@id/stagger"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_e_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint5"
+                android:textSize = "26sp"/>
+            <TextSwitcher
+                android:id="@+id/joint_e_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/joint_f"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/middle_line"
+            android:layout_below="@id/joint_e"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_f_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint6"
+                android:textSize = "26sp"/>
+            <TextSwitcher
+                android:id="@+id/joint_f_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/joint_g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/middle_line"
+            android:layout_below="@id/joint_f"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_g_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint7"
+                android:textSize = "26sp"/>
+            <TextSwitcher
+                android:id="@+id/joint_g_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/footer_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginLeft="@dimen/glass_card_margin"
+        android:layout_marginBottom="@dimen/glass_card_footer_margin"
+        android:layout_marginRight="@dimen/glass_card_margin"
+        android:orientation="horizontal"
+        >
+
+        <!-- The footer view will grow to fit as much content as possible while the
+             timestamp view keeps a fixed width. If the footer text is too long, it
+             will be ellipsized with a 40px margin between it and the timestamp. -->
+
+        <TextView
+            android:id="@+id/footer"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            />
+
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/glass_card_margin"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            />
+
+    </LinearLayout>
+
+</FrameLayout>
+
+
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -7,110 +219,5 @@
     android:clickable="true"
     android:onClick="onClick"
     tools:context="com.annaleonard.myfirstimmersion.MeasuringActivity">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/on_click_view" />
-
-
-    <TextView
-        android:id="@+id/joint1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/joint1"
-        android:textSize = "22dp"
-        android:gravity="center_horizontal"
-        android:textColor="#ddbb11"
-        />
-    <TextView
-        android:id="@+id/joint2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/joint2"
-        android:textSize = "22dp"
-        android:layout_below="@+id/joint1"
-        android:textColor="#99cc33"/>
-    <TextView
-        android:id="@+id/joint3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/joint3"
-        android:textSize = "22dp"
-        android:layout_below="@+id/joint2"
-        android:textColor="#cc3333"/>
-    <TextView
-        android:id="@+id/joint4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/joint4"
-        android:textSize = "22dp"
-        android:layout_below="@+id/joint3"
-        android:textColor="#34a7ff"/>
-    <TextView
-        android:id="@+id/joint5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/joint5"
-        android:textSize = "22dp"
-        android:layout_below="@+id/joint4"
-        android:textColor="#808080"/>
-    <TextView
-        android:id="@+id/joint6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/joint6"
-        android:textSize = "22dp"
-        android:layout_below="@+id/joint5"
-        android:textColor="#ffffff"/>
-    <TextView
-        android:id="@+id/joint7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/joint7"
-        android:textSize = "22dp"
-        android:layout_below="@+id/joint6" />
-
-    <TextSwitcher
-        android:id="@+id/joint1switcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/joint1"/>
-    <TextSwitcher
-        android:id="@+id/joint2switcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/joint1"
-        android:layout_below="@+id/joint1"/>
-    <TextSwitcher
-        android:id="@+id/joint3switcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/joint1"
-        android:layout_below="@+id/joint2"/>
-    <TextSwitcher
-        android:id="@+id/joint4switcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/joint1"
-        android:layout_below="@+id/joint3"/>
-    <TextSwitcher
-        android:id="@+id/joint5switcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/joint1"
-        android:layout_below="@+id/joint4"/>
-    <TextSwitcher
-        android:id="@+id/joint6switcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/joint1"
-        android:layout_below="@+id/joint5" />
-    <TextSwitcher
-        android:id="@+id/joint7switcher"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/joint1"
-        android:layout_below="@+id/joint6" />
-
 </RelativeLayout>
+-->

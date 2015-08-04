@@ -52,6 +52,7 @@ import java.util.List;
  */
 public class MainActivity extends Activity {
 
+
 //    I am writing new stuff so I can push this!
 //    more more more
 //    push push push
@@ -89,7 +90,7 @@ public class MainActivity extends Activity {
 
     private void createCards() {
         mCards = new ArrayList<CardBuilder>();
-        mCards.add(new CardBuilder(this, CardBuilder.Layout.TEXT).setText("Quick-Know"));
+        mCards.add(new CardBuilder(this, CardBuilder.Layout.TEXT).setText("ARDUORS"));
     }
 
     private void publishCards() {
@@ -116,7 +117,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public int getItemViewType(int position){
+            public int getItemViewType(int position) {
                 return mCards.get(position).getItemViewType();
             }
 
