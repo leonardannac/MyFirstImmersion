@@ -280,13 +280,13 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                 mSocket.receive(mPacket);
 
                 double[] jointDoubleArray = new double[7];
+
                 for (int i = 0; i < 7; i++) {
                     jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(i * 8);
 //                    jointStringArray[i] = String.valueOf(Math.toRadians(jointDoubleArray[i]));  //convert to Radians
                     jointStringArray[i] = String.valueOf(jointPosFormat.format(jointDoubleArray[i]));
                 }
-                LimitMonitor onlyOne = new LimitMonitor(jointDoubleArray);
-                onlyOne.isAnyLimitHit();
+                final LimitMonitor onlyOne = new LimitMonitor(jointDoubleArray);
 
                 //This method says 'hey UI thread! i don't know what to do with this. can you run this code?'
                 //All methods and variables available in the UI thread are available inside runOnUiThread
@@ -298,6 +298,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                         if (whichJoint == -1) {
                             for (int i = 0; i < 7; i++) {
                                 Log.i("Joint " + i + ": ", jointStringArray[i]);
+                                if(!(onlyOne.getLimitHit()[i]))
+                                {
+                                    jointSwitcherArray[i].setBackgroundColor(Color.RED);
+                                }
                                 jointSwitcherArray[i].setText(jointStringArray[i]);
                             }
                         } else {

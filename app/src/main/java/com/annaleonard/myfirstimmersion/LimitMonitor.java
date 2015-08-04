@@ -22,10 +22,7 @@ public class LimitMonitor {
     public LimitMonitor(double [] mjointPositions)
     {
         jointPositions = mjointPositions;
-        for(int i=0; i<7; i++)
-        {
-            limitHit[i] = false;
-        }
+        isAnyLimitHit();
 
 
 
@@ -37,7 +34,7 @@ public class LimitMonitor {
         return limitHit;
     }
 
-    public boolean[] isAnyLimitHit ()
+    private void isAnyLimitHit ()
     {
         for(int i=0; i<7; i++)
         {
@@ -46,7 +43,6 @@ public class LimitMonitor {
                 limitHit[i] = true;
             }
         }
-        return limitHit;
     }
 
     public boolean isOneLimitHit (int whichJoint)

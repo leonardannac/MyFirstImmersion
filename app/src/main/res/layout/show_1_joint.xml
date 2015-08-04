@@ -20,13 +20,13 @@
         <TextSwitcher
             android:id="@+id/desired_joint"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextSwitcher>
+            android:layout_height="wrap_content"/>
         <TextSwitcher
             android:id="@+id/desired_joint_pos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize = "40sp"
-            android:layout_below="@+id/desired_joint"></TextSwitcher>
+            android:layout_below="@+id/desired_joint"/>
 
     </RelativeLayout>
 
