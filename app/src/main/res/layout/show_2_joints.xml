@@ -31,7 +31,7 @@ android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:gravity="center">
 
-        <TextSwitcher
+        <TextView
             android:id="@+id/joint_a_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@ android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:textSize = "40sp"
             />
-        <TextSwitcher
+        <TextView
             android:id="@+id/joint_a_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@ android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:gravity="center">
 
-        <TextSwitcher
+        <TextView
             android:id="@+id/joint_b_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@ android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:textSize = "40sp"
             />
-        <TextSwitcher
+        <TextView
             android:id="@+id/joint_b_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

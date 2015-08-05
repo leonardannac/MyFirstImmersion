@@ -34,15 +34,19 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     //TextSwitchers and ids that are used to update the xml layout displayed on the glass
     private TextSwitcher [] jointSwitcherArray = new TextSwitcher[7];    //Array containing text switchers for all joints view
     private TextSwitcher desiredJoint, desiredJointPos;    //Text Switchers for single joints view
-    private int [] switcherId = {R.id.joint_a_val,R.id.joint_b_val, R.id.joint_c_val, R.id.joint_d_val, R.id.joint_e_val, R.id.joint_f_val, R.id.joint_g_val};    //xml locations of switchers for all joints view
+    private int [] valId = {R.id.joint_a_val,R.id.joint_b_val, R.id.joint_c_val, R.id.joint_d_val, R.id.joint_e_val, R.id.joint_f_val, R.id.joint_g_val};    //xml locations of switchers for all joints view
     private int [] layoutId = {R.id.joint_a, R.id.joint_b, R.id.joint_c, R.id.joint_d, R.id.joint_e, R.id.joint_f, R.id.joint_g};
+    final int [] allJoints = {1,2,3,4,5,6,7};
 
     DecimalFormat jointPosFormat = new DecimalFormat("0.00");   //format to specify sig figs
 
     private volatile Thread backgroundThread;   //flag to cleanly stop background thread
 
+    Context ctx;
+
     private DatagramSocket mSocket;
     private DatagramPacket mPacket;
+    public MeasuringActivity mMeasuringActivity = MeasuringActivity.this;
 
 
     @Override
@@ -61,16 +65,17 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ctx =this;
 
         startThread();
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //Keeps activity awake
 
         getWindow().requestFeature(WindowUtils.FEATURE_VOICE_COMMANDS);//Enable voice activated menu
-        setContentView(R.layout.activity_measuring);  //Set the desired layout to display on screen
-
-        //Set up 7 text switchers for all joint view.  One for each joint.
-        makeAllJointTextSwitchers();
+//        setContentView(R.layout.activity_measuring);  //Set the desired layout to display on screen
+//        //Set up 7 text switchers for all joint view.  One for each joint.
+//        makeAllJointTextSwitchers();
+        menuSelection = new MultipleJointGUI(allJoints, ctx);
     }
 
     @Override
@@ -100,9 +105,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
 
-
+    MultipleJointGUI menuSelection;
 //2 flags
     int whichJoint = -1;
+    int[] whichJoints;
     String jointValue = "No Value Set";
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item)
@@ -110,63 +116,71 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int [] showJoints = {R.id.showJoint1, R.id.showJoint2, R.id.showJoint3, R.id.showJoint4, R.id.showJoint5, R.id.showJoint6, R.id.showJoint7};
+//        int [] showJoints = {R.id.showJoint1, R.id.showJoint2, R.id.showJoint3, R.id.showJoint4, R.id.showJoint5, R.id.showJoint6, R.id.showJoint7};
 
         if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS || featureId == Window.FEATURE_OPTIONS_PANEL)
         {
+
             switch (item.getItemId())
             {
                 case (R.id.showAllJoints):
                     //returns to layout with all 7 joints.
-                    setContentView(R.layout.activity_measuring);
-                    makeAllJointTextSwitchers();
-                    whichJoint = -1;
+//                    setContentView(R.layout.activity_measuring);
+//                    makeAllJointTextSwitchers();
+//                    whichJoint = -1;
+
                     return true;
 
 //                case (R.id.double_joint_option):
 //                    setContentView(R.layout.show_2_joints);
 //                    break;
 
+
                 case (R.id.single_joint_option):
                     //sets view to single joint layout, but does not set switchers
-                    setContentView(R.layout.show_1_joint);
-                    makeSingleJointTextSwitchers();
-                    whichJoint=0;
+                    whichJoints = new int[1];
+//                    setContentView(R.layout.show_1_joint);
+//                    makeSingleJointTextSwitchers();
+                    whichJoints[0]=0;
                     break;
 
+
+
                 //each option below individually sets the switchers in the single joint view to display the name and data for that particular joint.
+
+
                 case (R.id.showJoint1):
-                    whichJoint = 1;
+                    whichJoints[0] = 1;
                     desiredJoint.setText("Joint 1");
                     break;
 
                 case (R.id.showJoint2):
-                    whichJoint = 2;
+                    whichJoints[0] = 2;
                     desiredJoint.setText("Joint 2");
                     break;
 
                 case (R.id.showJoint3):
-                    whichJoint = 3;
+                    whichJoints[0] = 3;
                     desiredJoint.setText("Joint 3");
                     break;
 
                 case (R.id.showJoint4):
-                    whichJoint = 4;
+                    whichJoints[0] = 4;
                     desiredJoint.setText("Joint 4");
                     break;
 
                 case (R.id.showJoint5):
-                    whichJoint = 5;
+                    whichJoints[0] = 5;
                     desiredJoint.setText("Joint 5");
                     break;
 
                 case (R.id.showJoint6):
-                    whichJoint = 6;
+                    whichJoints[0] = 6;
                     desiredJoint.setText("Joint 6");
                     break;
 
                 case (R.id.showJoint7):
-                    whichJoint = 7;
+                    whichJoints[0] = 7;
                     desiredJoint.setText("Joint 7");
                     break;
 
@@ -176,6 +190,9 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
                     return super.onMenuItemSelected(featureId, item);
 
             }
+
+            menuSelection = new MultipleJointGUI(whichJoints, ctx);
+            menuSelection.setUpEntireScreen(MeasuringActivity.this);
         }
 
         return super.onMenuItemSelected(featureId, item);
@@ -184,8 +201,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     public void makeAllJointTextSwitchers(){
         for (int count =0; count< 7; count++)
         {
-            final int i=count;
-            jointSwitcherArray[count] = (TextSwitcher) findViewById(switcherId[count]);
+            jointSwitcherArray[count] = (TextSwitcher) findViewById(valId[count]);
             jointSwitcherArray[count].setFactory(new ViewSwitcher.ViewFactory() {
                 public View makeView() {
                     TextView tv = new TextView(MeasuringActivity.this);
@@ -199,34 +215,34 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
 
-    void makeSingleJointTextSwitchers()
-    {
-        desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
-        desiredJoint.setFactory(new ViewSwitcher.ViewFactory() {
-
-            @Override
-            public View makeView() {
-                TextView t = new TextView(getApplicationContext());
-                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-                t.setTextSize(40);
-                return t;
-            }
-        });
-
-
-        desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
-        desiredJointPos.setFactory(new ViewSwitcher.ViewFactory() {
-
-            @Override
-            public View makeView() {
-                TextView t = new TextView(getApplicationContext());
-                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
-                t.setTextSize(90);
-                return t;
-            }
-        });
-        desiredJointPos.setText("0.0");
-    }
+//    void makeSingleJointTextSwitchers()
+//    {
+//        desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
+//        desiredJoint.setFactory(new ViewSwitcher.ViewFactory() {
+//
+//            @Override
+//            public View makeView() {
+//                TextView t = new TextView(getApplicationContext());
+//                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+//                t.setTextSize(40);
+//                return t;
+//            }
+//        });
+//
+//
+//        desiredJointPos = (TextSwitcher) findViewById(R.id.desired_joint_pos);//attaches each switcher to its xml id
+//        desiredJointPos.setFactory(new ViewSwitcher.ViewFactory() {
+//
+//            @Override
+//            public View makeView() {
+//                TextView t = new TextView(getApplicationContext());
+//                t.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+//                t.setTextSize(90);
+//                return t;
+//            }
+//        });
+//        desiredJointPos.setText("0.0");
+//    }
 
     public View makeView(){
         TextView t = new TextView(this);
@@ -297,19 +313,21 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
                     @Override
                     public void run() {
+                        menuSelection.updateSwitchers(jointStringArray, onlyOne);
 
-                        if (whichJoint == -1) {
-                            for (int i = 0; i < 7; i++) {
-//                                Log.i("Joint " + i + ": ", jointStringArray[i]);
-                                onlyOne.updateGUI(findViewById(layoutId[i]), i);
-                                jointSwitcherArray[i].setText(jointStringArray[i]);
-                            }
-                        } else {
-                            if (whichJoint > 0) {
-                                desiredJointPos.setText(jointStringArray[whichJoint - 1]);
-                                onlyOne.updateGUI(findViewById(R.id.layout), whichJoint - 1 );
-                            }
-                        }
+//                        if (whichJoint == -1) {
+//                            for (int i = 0; i < 7; i++) {
+////                                Log.i("Joint " + i + ": ", jointStringArray[i]);
+////                                onlyOne.updateGUI(findViewById(layoutId[i]), i);
+////                                jointSwitcherArray[i].setText(jointStringArray[i]);
+//
+//                            }
+//                        } else {
+//                            if (whichJoint > 0) {
+//                                desiredJointPos.setText(jointStringArray[whichJoint - 1]);
+//                                onlyOne.updateGUI(findViewById(R.id.layout), whichJoint - 1 );
+//                            }
+//                        }
                     }
                 });
 
@@ -320,4 +338,21 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
             }
         }   //Justin Brannan is awesome and helps poor lost souls with git.
     }
+
+    private RequestActivityMethods viewRequest = new RequestActivityMethods() {
+
+        public View requestViewById(int id) {
+
+            Log.i("findViewByIdRequested","");
+            return findViewById(id);
+
+        }
+
+        public void requestSetContentView (int id)
+        {
+
+            Log.i("requestSetContentView","");
+            setContentView(id);
+        }
+    };
 }

@@ -14,22 +14,28 @@
         android:layout_marginTop="@dimen/glass_card_margin"
         android:layout_marginRight="@dimen/glass_card_margin"
         tools:ignore="UselessLeaf"
+        android:gravity="center"
         >
 
         <!-- Put your widgets inside this RelativeLayout. -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:id="@+id/joint_a">
             <TextSwitcher
-                android:id="@+id/desired_joint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextSwitcher
-                android:id="@+id/desired_joint_pos"
+                android:id="@+id/joint_a_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize = "40sp"/>
+                android:text="@string/joint1"
+                android:textSize="30sp"/>
+            <TextSwitcher
+                android:id="@+id/joint_a_val"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/example_joint_value"
+                android:textSize = "80sp"/>
 
         </LinearLayout>
 

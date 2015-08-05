@@ -14,52 +14,73 @@
         android:layout_marginTop="@dimen/glass_card_margin"
         android:layout_marginRight="@dimen/glass_card_margin"
         tools:ignore="UselessLeaf"
+        android:gravity="center"
         >
 
         <!-- Put your widgets inside this RelativeLayout. -->
 
         <!--Joint Titles and Values. All will eventually become switchers.-->
-        <TextView
+        <LinearLayout
             android:id="@+id/joint_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/joint1"
-            android:gravity="center_horizontal"
-            android:textSize = "40dp"
-            />
-        <TextView
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_a_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint1"
+                android:textSize = "35sp"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/joint_a_val"
+                android:text="@string/example_joint_value"
+                android:textSize = "35sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/joint_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/joint2"
-            android:gravity="center_horizontal"
-            android:textSize = "40dp"
-            />
-        <TextView
+            android:layout_below="@id/joint_a"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_b_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/joint2"
+                android:textSize = "35sp" />
+            <TextView
+                android:id="@+id/joint_b_val"
+                android:text="@string/example_joint_value"
+                android:textSize = "35sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/joint_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/joint3"
-            android:textSize = "40dp"
-            />
-
-        <TextView
-            android:id="@+id/joint_a_val"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/example_joint_value"/>
-
-        <TextView
-            android:id="@+id/joint_b_val"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/example_joint_value"/>
-
-        <TextView
-            android:id="@+id/joint_c_val"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/example_joint_value"/>
+            android:layout_below = "@id/joint_b"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/joint_c_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize = "35sp"
+                android:text="@string/joint3"/>
+            <TextView
+                android:id="@+id/joint_c_val"
+                android:text="@string/example_joint_value"
+                android:textSize = "35sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
     </RelativeLayout>
 
