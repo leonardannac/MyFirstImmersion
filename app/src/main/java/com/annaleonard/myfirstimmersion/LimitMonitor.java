@@ -14,6 +14,7 @@ import com.google.android.glass.media.Sounds;
 public class LimitMonitor {
 
     private final int JOINT_LIMIT = 0;
+    private int count = 0;
     private boolean [] limitHit = new boolean[7];
     private double [] jointPositions;
 
@@ -31,9 +32,6 @@ public class LimitMonitor {
     {
         jointPositions = mjointPositions;
         isAnyLimitHit();
-
-
-
     }
 
 

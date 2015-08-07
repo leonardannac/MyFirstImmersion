@@ -32,4 +32,10 @@
     <string name="single_joint_title">Single Joint Display</string>
     <string name="example_joint_value">163.51</string>
 
+    <string name="no_internet_connection">No Internet Connection</string>
+
+    <string name="arduors">ARDUORS</string>
+    <string name="splash_text_1">Tap two times to Start Measuring.</string>
+    <string name="splash_text_2">See Information for help.</string>
+
 </resources>

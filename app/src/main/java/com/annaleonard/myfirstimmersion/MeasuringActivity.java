@@ -44,20 +44,9 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     private DatagramSocket mSocket;
     private DatagramPacket mPacket;
 
+    final String[] jointStringArray = new String[7];
+    int whichJoint = -1;
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-            AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-            am.playSoundEffect(Sounds.TAP);
-            openOptionsMenu();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    //On Create is called when the application is first opened
-    //The bundle saves the state of the app in case the app is being reopened.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,12 +63,10 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
     @Override
-    //Stops the background thread of data collection when activity is destroyed
     protected void onDestroy(){
         stopThread();
         super.onDestroy();
     }
-
 
     @Override
     public boolean onCreatePanelMenu(int featureId, Menu menu) {
@@ -89,7 +76,6 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         }
         // Pass through to super to setup touch menu.
         return super.onCreatePanelMenu(featureId, menu);
-
     }
 
     @Override
@@ -99,18 +85,13 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         return true;
     }
 
-
-
-//2 flags
-    int whichJoint = -1;
-    String jointValue = "No Value Set";
     @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item)
-    {
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int [] showJoints = {R.id.showJoint1, R.id.showJoint2, R.id.showJoint3, R.id.showJoint4, R.id.showJoint5, R.id.showJoint6, R.id.showJoint7};
+        AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         if (featureId == WindowUtils.FEATURE_VOICE_COMMANDS || featureId == Window.FEATURE_OPTIONS_PANEL)
         {
@@ -136,42 +117,47 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
                 //each option below individually sets the switchers in the single joint view to display the name and data for that particular joint.
                 case (R.id.showJoint1):
+                    am.playSoundEffect(Sounds.TAP);
                     whichJoint = 1;
                     desiredJoint.setText("Joint 1");
                     break;
 
                 case (R.id.showJoint2):
+                    am.playSoundEffect(Sounds.TAP);
                     whichJoint = 2;
                     desiredJoint.setText("Joint 2");
                     break;
 
                 case (R.id.showJoint3):
+                    am.playSoundEffect(Sounds.TAP);
                     whichJoint = 3;
                     desiredJoint.setText("Joint 3");
                     break;
 
                 case (R.id.showJoint4):
+                    am.playSoundEffect(Sounds.TAP);
                     whichJoint = 4;
                     desiredJoint.setText("Joint 4");
                     break;
 
                 case (R.id.showJoint5):
+                    am.playSoundEffect(Sounds.TAP);
                     whichJoint = 5;
                     desiredJoint.setText("Joint 5");
                     break;
 
                 case (R.id.showJoint6):
+                    am.playSoundEffect(Sounds.TAP);
                     whichJoint = 6;
                     desiredJoint.setText("Joint 6");
                     break;
 
                 case (R.id.showJoint7):
+                    am.playSoundEffect(Sounds.TAP);
                     whichJoint = 7;
                     desiredJoint.setText("Joint 7");
                     break;
 
-
-                //the default never gets called.
                 default:
                     return super.onMenuItemSelected(featureId, item);
 
@@ -179,6 +165,17 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         }
 
         return super.onMenuItemSelected(featureId, item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+            AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+            am.playSoundEffect(Sounds.TAP);
+            openOptionsMenu();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void makeAllJointTextSwitchers(){
@@ -198,9 +195,7 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
         }
     }
 
-
-    void makeSingleJointTextSwitchers()
-    {
+    void makeSingleJointTextSwitchers() {
         desiredJoint = (TextSwitcher) findViewById(R.id.desired_joint);//attaches each switcher to its xml id
         desiredJoint.setFactory(new ViewSwitcher.ViewFactory() {
 
@@ -237,14 +232,9 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
 
     public void onClick(View v){
         AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        am.playSoundEffect(Sounds.SUCCESS);
+        am.playSoundEffect(Sounds.TAP);
     }
 
-
-
-
-    final String[] jointStringArray = new String[7];
-    //The background thread where all the data collection occurs
     public void startThread(){
         //Create a thread, define it's run() method, and start the thread
         backgroundThread = new Thread(new Runnable() {
@@ -257,57 +247,71 @@ public class MeasuringActivity extends Activity implements ViewSwitcher.ViewFact
     }
 
     public void stopThread(){
-        mSocket.close();    //Socket must be closed here or 'SocketException: bind failed: EADDRINUSE'
+        try {                   //Have to try in case there isn't an internet connection and socket wasn't created.
+            mSocket.close();    //Socket must be closed here or 'SocketException: bind failed: EADDRINUSE'
+        } catch(NullPointerException e){
+        }
         backgroundThread = null;    //Asks the thread to stop nicely by setting flag var
     }
 
     public void runThread(){
-        Thread thisThread = Thread.currentThread();
-        if (mSocket == null){   //possibly can get rid of this check if the socket exists
-//            Log.i("mSocket","null");
+        Thread thisThread = Thread.currentThread(); //set flag to current thread
+        //check that the socket does not exist already before creating and binding it
+        if (mSocket == null){
             try {
                 mSocket = new DatagramSocket(61557, InetAddress.getByName("10.0.0.15")); //Use Glass IP address here
             } catch (UnknownHostException e){
-//                Log.i("UnknownHostException",e.getMessage());
+                e.printStackTrace();
             } catch (SocketException e){
-//                Log.i("SocketException",e.getMessage());
+                e.printStackTrace();
             }
         }
-        while (backgroundThread == thisThread) {    //while backgroundThread has not been asked to stop
+
+        //while the backgroundThread has not been asked to stop
+        while (backgroundThread == thisThread) {
             byte[] buf = new byte[56];
             mPacket = new DatagramPacket(buf, buf.length);
 
             try {
                 Thread.sleep(10, 0);
-                mSocket.receive(mPacket);
 
+                try{
+                    mSocket.receive(mPacket);   //receive UDP packet
+                } catch (NullPointerException e){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //NullPointerException indicates that mSocket was not created --> no internet connection
+                            setContentView(R.layout.no_internet_connection_layout);
+                        }
+                    });
+                    break;
+                }
+
+                //Get data from UDP packet and convert to user-ready information    (joint values are in degrees)
                 double[] jointDoubleArray = new double[7];
-
                 for (int i = 0; i < 7; i++) {
                     jointDoubleArray[i] = ByteBuffer.wrap(mPacket.getData()).order(ByteOrder.LITTLE_ENDIAN).getDouble(i * 8);
                     jointStringArray[i] = String.valueOf(jointPosFormat.format(jointDoubleArray[i]));
                 }
 
-
                 final LimitMonitor onlyOne = new LimitMonitor(jointDoubleArray);
 
-                //This method says 'hey UI thread! i don't know what to do with this. can you run this code?'
+                //RunOnUiThread method says 'hey UI thread! i don't know what to do with this. can you run this code?'
                 //All methods and variables available in the UI thread are available inside runOnUiThread
                 runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-
                         if (whichJoint == -1) {
                             for (int i = 0; i < 7; i++) {
-//                                Log.i("Joint " + i + ": ", jointStringArray[i]);
                                 onlyOne.updateGUI(findViewById(layoutId[i]), i);
                                 jointSwitcherArray[i].setText(jointStringArray[i]);
                             }
                         } else {
                             if (whichJoint > 0) {
-                                desiredJointPos.setText(jointStringArray[whichJoint - 1]);
-                                onlyOne.updateGUI(findViewById(R.id.layout), whichJoint - 1 );
+                            desiredJointPos.setText(jointStringArray[whichJoint - 1]);
+                            onlyOne.updateGUI(findViewById(R.id.layout), whichJoint - 1);
                             }
                         }
                     }
